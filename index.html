@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Ultimate Test: Kratika vs. Shakuntala Devi</title>
+<style>
+  :root{
+    --bg: #FBF3DA;
+    --bg-soft: #FFF9E9;
+    --card: #FFFDF6;
+    --border: #EFDFAE;
+    --text: #4A3C24;
+    --text-soft: #8A7A54;
+    --accent: #E8A33D;
+    --accent-dark: #C97F1E;
+    --accent-soft: #F6D98B;
+    --good: #7FA86B;
+    --good-bg: #E9F2E3;
+    --bad: #D97B6C;
+    --bad-bg: #FBEAE6;
+    --shadow: 0 6px 18px rgba(150, 115, 40, 0.12);
+    --radius: 22px;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin:0; padding:0; overflow-x:hidden; width:100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-rounded, "Nunito", "Segoe UI", Verdana, system-ui, sans-serif;
+  }
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(244,201,110,0.35) 0, transparent 45%),
+      radial-gradient(circle at 92% 85%, rgba(244,201,110,0.30) 0, transparent 40%),
+      var(--bg);
+    display:flex; justify-content:center;
+  }
+  #app{
+    width:100%; max-width:520px;
+    min-height:100vh;
+    position:relative;
+    padding: 18px 16px 40px;
+    display:flex; flex-direction:column;
+  }
+  .decor-sunflower{
+    position:absolute; font-size:24px; opacity:0.32; pointer-events:none; user-select:none;
+  }
+  .screen{ display:none; flex-direction:column; flex:1; animation: fadeIn 0.35s ease; }
+  .screen.active{ display:flex; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  h1,h2,h3{ margin:0; }
+  p{ margin:0; }
+
+  .card{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px 18px;
+  }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+    color: #fff; font-weight:800; letter-spacing:0.3px;
+    border:none; border-radius: 999px;
+    padding: 15px 22px; font-size: 16.5px;
+    box-shadow: 0 6px 14px rgba(201,127,30,0.35);
+    cursor:pointer; width:100%;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:active{ transform: scale(0.97); box-shadow: 0 3px 8px rgba(201,127,30,0.30); }
+  .btn:disabled{ opacity:0.5; cursor:default; }
+  .btn-ghost{
+    background: transparent; color: var(--accent-dark);
+    border: 2px solid var(--accent-soft); box-shadow:none; font-weight:700;
+  }
+
+  .app-brand{ text-align:center; font-size:11.5px; font-weight:800; letter-spacing:0.6px; color:var(--accent-dark); text-transform:uppercase; }
+
+  /* ---------- INSTRUCTIONS ---------- */
+  #screen-instructions{ justify-content:center; gap:14px; }
+  .instr-emoji{ text-align:center; font-size:40px; }
+  .instr-title{ text-align:center; font-size:24px; font-weight:900; margin-top:6px; }
+  .instr-list{ list-style:none; padding:0; margin:14px 0 0; display:flex; flex-direction:column; gap:8px; }
+  .instr-list li{ font-size:14px; line-height:1.4; padding-left:22px; position:relative; color:var(--text); }
+  .instr-list li:before{ content:"•"; position:absolute; left:6px; color:var(--accent-dark); font-weight:900; }
+  .instr-tease{ text-align:center; font-size:13.5px; color: var(--text-soft); margin-top:14px; line-height:1.6; font-style:italic; }
+
+  /* ---------- LEVEL MAP ---------- */
+  .map-header{ text-align:center; margin-bottom:6px; }
+  .map-header h2{ font-size:19px; }
+  .progressbar-wrap{ background:var(--bg-soft); border:1px solid var(--border); border-radius:999px; height:10px; margin:10px 0 4px; overflow:hidden; }
+  .progressbar-fill{ height:100%; background: linear-gradient(90deg, var(--accent-soft), var(--accent)); border-radius:999px; transition: width 0.4s ease; }
+  .progress-label{ text-align:center; font-size:12.5px; color:var(--text-soft); margin-bottom:14px; }
+
+  .level-node{
+    display:flex; align-items:center; gap:14px;
+    background: var(--card); border:1px solid var(--border); border-radius:18px;
+    padding:14px 16px; margin-bottom:10px; box-shadow: var(--shadow);
+    cursor:pointer;
+  }
+  .level-node.locked{ opacity:0.55; cursor:default; }
+  .level-node .lvl-emoji{ font-size:28px; width:44px; text-align:center; }
+  .level-node .lvl-info{ flex:1; }
+  .level-node .lvl-info .lvl-title{ font-weight:800; font-size:15px; }
+  .level-node .lvl-info .lvl-reward{ font-size:12px; color: var(--text-soft); margin-top:2px; }
+  .level-node .lvl-status{ font-size:11px; font-weight:800; padding:5px 10px; border-radius:999px; white-space:nowrap; }
+  .status-available{ background:#FCE7BB; color:#8A5A12; }
+  .status-locked{ background:#EDE6D0; color:#A79768; }
+  .status-cleared{ background:#DCEBD3; color:#3F6B2C; }
+
+  /* ---------- QUIZ ---------- */
+  .quiz-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:2px; }
+  .quiz-app-name{ font-size:10.5px; font-weight:800; color: var(--text-soft); letter-spacing:0.4px; }
+  .quiz-level-name{ font-size:12.5px; font-weight:800; color: var(--accent-dark); letter-spacing:0.4px; }
+  .quiz-timer{
+    font-variant-numeric: tabular-nums; font-weight:800; font-size:16px;
+    background: var(--bg-soft); border:1px solid var(--border); border-radius:999px;
+    padding:6px 12px;
+  }
+  .quiz-timer.warn{ color: var(--bad); animation: pulseSoft 1.4s ease-in-out infinite; }
+  @keyframes pulseSoft{ 0%,100%{opacity:1;} 50%{opacity:0.55;} }
+
+  .quiz-toprow{ display:flex; justify-content:space-between; align-items:center; margin: 8px 0 12px; }
+  .quiz-qcount{ font-size:12.5px; color:var(--text-soft); }
+
+  .quiz-card{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:18px; min-height: 42vh; }
+  .quiz-question{ font-size: clamp(20px, 6vw, 25px); font-weight:800; text-align:center; line-height:1.4; }
+
+  .answer-input{
+    width:100%; font-size:20px; padding:16px 18px; border-radius:16px;
+    border:2px solid var(--border); background: var(--bg-soft); color:var(--text);
+    text-align:center; font-weight:700;
+  }
+  .answer-input:focus{ outline:none; border-color: var(--accent); }
+
+  .quiz-card.flash-correct{ animation: flashGood 0.4s ease; }
+  .quiz-card.flash-wrong{ animation: flashBad 0.4s ease; }
+  @keyframes flashGood{ 0%{ background: rgba(127,168,107,0.18);} 100%{ background: transparent; } }
+  @keyframes flashBad{ 0%{ background: rgba(217,123,108,0.18);} 100%{ background: transparent; } }
+
+  /* ---------- REVIEW ---------- */
+  .review-header{ text-align:center; margin-bottom:12px; }
+  .review-header h2{ font-size:18px; }
+  .review-sub{ text-align:center; font-size:12.5px; color:var(--text-soft); margin-bottom:12px; }
+  .review-list{ display:flex; flex-direction:column; gap:8px; overflow-y:auto; flex:1; padding-bottom:8px; }
+  .review-item{
+    border-radius:14px; padding:10px 12px; border:1px solid var(--border);
+    background: var(--bg-soft); font-size:13px;
+  }
+  .review-item.correct{ background: var(--good-bg); border-color:#CFE3C4; }
+  .review-item.wrong{ background: var(--bad-bg); border-color:#F0CFC7; }
+  .review-item .ri-q{ font-weight:800; margin-bottom:4px; }
+  .review-item .ri-line{ display:flex; justify-content:space-between; gap:6px; color:var(--text-soft); font-size:12.5px; }
+  .review-item .ri-mark{ font-weight:900; margin-right:4px; }
+  .review-item.correct .ri-mark{ color: var(--good); }
+  .review-item.wrong .ri-mark{ color: var(--bad); }
+  .review-footer{ margin-top:12px; }
+
+  /* ---------- RESULT ---------- */
+  #screen-result{ justify-content:center; }
+  .result-card{ text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center; }
+  .result-status{ font-size:15px; font-weight:900; letter-spacing:0.5px; }
+  .result-score{ font-size:42px; font-weight:900; }
+  .result-meta{ display:flex; gap:22px; justify-content:center; margin-top:2px; }
+  .result-meta div{ text-align:center; }
+  .result-meta .m-label{ font-size:11.5px; color:var(--text-soft); font-weight:700; }
+  .result-meta .m-value{ font-size:16px; font-weight:800; margin-top:2px; }
+  .fail-note{ font-size:14px; color:var(--text-soft); line-height:1.5; }
+  .tease-note{
+    margin-top:6px; padding:12px 14px; background: var(--bg-soft); border:1px dashed var(--accent-soft);
+    border-radius:14px; font-size:13px; font-weight:700; color: var(--accent-dark); line-height:1.5;
+  }
+  .celebrate{ animation: pop 0.5s ease; }
+  @keyframes pop{ 0%{ transform:scale(0.7); opacity:0;} 60%{ transform:scale(1.08); opacity:1;} 100%{ transform:scale(1); } }
+
+  /* ---------- REWARD REVEAL ---------- */
+  #screen-reward{ justify-content:center; align-items:center; text-align:center; }
+  .reward-box{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .reward-pre{ font-size:15px; font-weight:800; color:var(--text-soft); }
+  .reward-gift{ font-size:56px; }
+  .reward-emoji-big{ font-size:60px; }
+  .reward-name-big{ font-size:19px; font-weight:900; }
+  .reward-unlocked-tag{ font-size:13px; font-weight:800; color: var(--good); margin-top:2px; }
+
+  /* ---------- REWARD JOURNEY (level map badges use same styles) ---------- */
+
+  /* ---------- FINAL VICTORY / SCORECARD ---------- */
+  .victory-title{ font-size:21px; font-weight:900; text-align:center; }
+  .summary-row{ display:flex; justify-content:space-between; padding:8px 4px; border-bottom:1px solid var(--border); font-size:14px; font-weight:700; }
+  .summary-row:last-child{ border-bottom:none; }
+  .grand-reward{ text-align:center; margin-top:16px; padding:20px; border-radius:18px; background: linear-gradient(180deg, var(--accent-soft), var(--bg-soft)); border:1px solid var(--accent-soft); }
+  .grand-reward .g-emoji{ font-size:50px; }
+  .grand-reward .g-title{ font-weight:900; font-size:17px; margin-top:6px; }
+  .final-note{ text-align:center; font-size:13px; color:var(--text-soft); margin-top:10px; line-height:1.6; }
+
+  .scorecard-brand{ text-align:center; font-size:12px; font-weight:800; letter-spacing:0.4px; color:var(--accent-dark); line-height:1.4; }
+  .scorecard-title{ text-align:center; font-size:19px; font-weight:900; margin:8px 0 14px; }
+  .final-status{ text-align:center; font-weight:900; font-size:15px; margin-top:16px; padding:12px; border-radius:14px; background: var(--accent-soft); }
+
+  .stat-grid{ display:flex; justify-content:space-around; margin-top:14px; text-align:center; }
+  .stat-grid .s-num{ font-size:19px; font-weight:900; }
+  .stat-grid .s-label{ font-size:10.5px; color:var(--text-soft); font-weight:700; }
+
+  .center-text{ text-align:center; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="decor-sunflower" style="top:8px; left:6px;">🌻</div>
+  <div class="decor-sunflower" style="top:60px; right:10px; font-size:19px;">🌻</div>
+  <div class="decor-sunflower" style="bottom:20px; left:14px; font-size:17px;">🌻</div>
+
+  <!-- INSTRUCTIONS SCREEN -->
+  <div class="screen active" id="screen-instructions">
+    <div class="app-brand">THE ULTIMATE TEST<br>KRATIKA VS. SHAKUNTALA DEVI</div>
+    <div class="instr-emoji">🌻</div>
+    <div class="instr-title">HOW TO PLAY</div>
+    <div class="card" style="margin-top:12px;">
+      <ul class="instr-list">
+        <li>There are 5 levels.</li>
+        <li>Each level has 30 questions.</li>
+        <li>You have 4 minutes for each level.</li>
+        <li>You must type your answers.</li>
+        <li>There are no MCQs.</li>
+        <li>Each correct answer gives 1 point.</li>
+        <li>Wrong answers give 0 points.</li>
+        <li>There is no negative marking.</li>
+        <li>You need at least 20/30 to clear a level.</li>
+        <li>If you fail, you can retry that level.</li>
+        <li>You can retry a level as many times as needed.</li>
+        <li>Previously cleared levels remain cleared.</li>
+        <li>Questions are shuffled every time you attempt a level.</li>
+        <li>Your reward is revealed only after you clear a level.</li>
+        <li>Complete all 5 levels to reach the Final Reward.</li>
+      </ul>
+      <p class="instr-tease">Speed matters.<br>Accuracy matters.<br>And apparently, Aryan has decided this is a competition.</p>
+    </div>
+    <div style="margin-top:16px;">
+      <button class="btn" id="btn-begin">LET'S BEGIN 🌻</button>
+    </div>
+  </div>
+
+  <!-- LEVEL MAP -->
+  <div class="screen" id="screen-map">
+    <div class="app-brand" style="margin-bottom:8px;">THE ULTIMATE TEST</div>
+    <div class="map-header"><h2>🌻 YOUR JOURNEY</h2></div>
+    <div class="progress-label" id="map-progress-label">LEVEL 1 OF 5</div>
+    <div class="progressbar-wrap"><div class="progressbar-fill" id="map-progress-fill" style="width:0%"></div></div>
+    <div style="margin-top:16px;" id="map-list"></div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="screen" id="screen-quiz">
+    <div class="quiz-top">
+      <span class="quiz-app-name">THE ULTIMATE TEST</span>
+      <span class="quiz-timer" id="quiz-timer">04:00</span>
+    </div>
+    <div class="quiz-toprow">
+      <span class="quiz-level-name" id="quiz-level-name">LEVEL 1 · TABLE TROUBLE</span>
+      <span class="quiz-qcount" id="quiz-qcount">Question 1 / 30</span>
+    </div>
+    <div class="card quiz-card" id="quiz-card">
+      <div class="quiz-question" id="quiz-question">—</div>
+      <input class="answer-input" id="quiz-input" type="text" inputmode="decimal" autocomplete="off" placeholder="Type your answer">
+      <button class="btn" id="quiz-submit">SUBMIT</button>
+    </div>
+  </div>
+
+  <!-- REVIEW SCREEN -->
+  <div class="screen" id="screen-review">
+    <div class="review-header"><h2>📋 ANSWER REVIEW</h2></div>
+    <div class="review-sub" id="review-sub">Here's how you did, question by question.</div>
+    <div class="review-list" id="review-list"></div>
+    <div class="review-footer">
+      <button class="btn" id="review-continue-btn">SEE MY RESULT</button>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div class="screen" id="screen-result">
+    <div class="card result-card">
+      <div class="result-status" id="result-status">LEVEL CLEARED ✓</div>
+      <div class="result-score celebrate" id="result-score">24 / 30</div>
+      <div class="result-meta">
+        <div><div class="m-label">ACCURACY</div><div class="m-value" id="result-accuracy">80%</div></div>
+        <div><div class="m-label">TIME USED</div><div class="m-value" id="result-time">03:41</div></div>
+      </div>
+      <div id="result-fail-block" style="display:none;">
+        <p class="fail-note" id="result-fail-note">You needed 20. Don't worry — you get another chance.</p>
+      </div>
+      <div class="tease-note" id="tease-note">ARYAN'S SCORE = 0 FOR LEVEL 1</div>
+      <div style="width:100%; display:flex; flex-direction:column; gap:10px; margin-top:6px;">
+        <button class="btn" id="result-primary-btn">CONTINUE</button>
+        <button class="btn btn-ghost" id="result-map-btn">BACK TO JOURNEY</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REWARD REVEAL -->
+  <div class="screen" id="screen-reward">
+    <div class="card reward-box">
+      <div class="reward-pre">YOU CLEARED THE LEVEL!</div>
+      <div class="reward-gift celebrate" id="reward-gift">🎁</div>
+      <div class="reward-pre">YOUR SURPRISE REWARD IS...</div>
+      <div class="reward-emoji-big celebrate" id="reward-emoji-big" style="display:none;">🍫</div>
+      <div class="reward-name-big" id="reward-name-big" style="display:none;">CHOCOLATE</div>
+      <div class="reward-unlocked-tag" id="reward-unlocked-tag" style="display:none;">REWARD UNLOCKED ✓</div>
+      <div style="width:100%; margin-top:14px;">
+        <button class="btn" id="reward-continue-btn" style="display:none;">CONTINUE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL VICTORY -->
+  <div class="screen" id="screen-victory">
+    <div class="card">
+      <div class="center-text" style="font-size:32px;">🌻</div>
+      <div class="victory-title center-text">FINAL BOSS DEFEATED 👑</div>
+      <p class="center-text" style="margin-top:6px; font-weight:800; color:var(--accent-dark);">YOU SURVIVED ALL 5 LEVELS</p>
+      <p class="center-text" style="margin-top:4px; font-size:13px; color:var(--text-soft); line-height:1.5;">150 questions.<br>5 levels.<br>1 very questionable reward.</p>
+      <div style="margin-top:16px;" id="victory-summary"></div>
+      <div class="grand-reward">
+        <div class="center-text" style="font-size:11px; font-weight:800; color:var(--accent-dark); letter-spacing:0.5px;">YOUR GRAND REWARD</div>
+        <div class="center-text g-emoji">🧹</div>
+        <div class="center-text g-title">ARYAN KA ROOM<br>SAAF KARWANA 🥹</div>
+      </div>
+      <p class="final-note">Mission unlocked.<br>No refunds. No appeals. No revaluation.</p>
+      <div style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
+        <button class="btn" id="victory-scorecard-btn">VIEW SCREENSHOT SCORE CARD</button>
+        <button class="btn btn-ghost" id="victory-map-btn">BACK TO JOURNEY</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCORE CARD -->
+  <div class="screen" id="screen-scorecard">
+    <div class="card">
+      <div class="scorecard-brand">THE ULTIMATE TEST:<br>KRATIKA VS. SHAKUNTALA DEVI</div>
+      <div class="scorecard-title">FINAL RESULT</div>
+      <div id="scorecard-summary"></div>
+      <div class="stat-grid">
+        <div><div class="s-num" id="sc-levels-cleared">5/5</div><div class="s-label">LEVELS CLEARED</div></div>
+        <div><div class="s-num">150</div><div class="s-label">QUESTIONS</div></div>
+      </div>
+      <div class="final-status">FINAL BOSS DEFEATED 👑</div>
+      <div class="center-text" style="margin-top:16px; font-size:40px;">🧹</div>
+      <div class="center-text" style="font-weight:900; font-size:15px;">ARYAN KA ROOM<br>SAAF KARWANA 🥹</div>
+      <div style="margin-top:16px;">
+        <button class="btn btn-ghost" id="scorecard-back-btn">BACK</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------- QUESTION DATA ----------------
+  var QUESTIONS = {"level1": [{"q": "17 × 9 = ?", "a": "153", "type": "int"}, {"q": "23 × 8 = ?", "a": "184", "type": "int"}, {"q": "19 × 7 = ?", "a": "133", "type": "int"}, {"q": "24 × 9 = ?", "a": "216", "type": "int"}, {"q": "16 × 8 = ?", "a": "128", "type": "int"}, {"q": "21 × 7 = ?", "a": "147", "type": "int"}, {"q": "25 × 9 = ?", "a": "225", "type": "int"}, {"q": "18 × 8 = ?", "a": "144", "type": "int"}, {"q": "22 × 7 = ?", "a": "154", "type": "int"}, {"q": "14 × 9 = ?", "a": "126", "type": "int"}, {"q": "23 × 6 = ?", "a": "138", "type": "int"}, {"q": "17 × 8 = ?", "a": "136", "type": "int"}, {"q": "24 × 7 = ?", "a": "168", "type": "int"}, {"q": "19 × 8 = ?", "a": "152", "type": "int"}, {"q": "21 × 9 = ?", "a": "189", "type": "int"}, {"q": "16 × 7 = ?", "a": "112", "type": "int"}, {"q": "25 × 8 = ?", "a": "200", "type": "int"}, {"q": "22 × 9 = ?", "a": "198", "type": "int"}, {"q": "18 × 7 = ?", "a": "126", "type": "int"}, {"q": "13 × 8 = ?", "a": "104", "type": "int"}, {"q": "24 × 6 = ?", "a": "144", "type": "int"}, {"q": "17 × 7 = ?", "a": "119", "type": "int"}, {"q": "23 × 9 = ?", "a": "207", "type": "int"}, {"q": "19 × 6 = ?", "a": "114", "type": "int"}, {"q": "21 × 8 = ?", "a": "168", "type": "int"}, {"q": "15 × 9 = ?", "a": "135", "type": "int"}, {"q": "25 × 7 = ?", "a": "175", "type": "int"}, {"q": "22 × 8 = ?", "a": "176", "type": "int"}, {"q": "16 × 9 = ?", "a": "144", "type": "int"}, {"q": "18 × 9 = ?", "a": "162", "type": "int"}], "level2": [{"q": "13² = ?", "a": "169", "type": "int"}, {"q": "14² = ?", "a": "196", "type": "int"}, {"q": "16² = ?", "a": "256", "type": "int"}, {"q": "17² = ?", "a": "289", "type": "int"}, {"q": "18² = ?", "a": "324", "type": "int"}, {"q": "19² = ?", "a": "361", "type": "int"}, {"q": "21² = ?", "a": "441", "type": "int"}, {"q": "22² = ?", "a": "484", "type": "int"}, {"q": "23² = ?", "a": "529", "type": "int"}, {"q": "24² = ?", "a": "576", "type": "int"}, {"q": "26² = ?", "a": "676", "type": "int"}, {"q": "27² = ?", "a": "729", "type": "int"}, {"q": "√225 = ?", "a": "15", "type": "int"}, {"q": "√289 = ?", "a": "17", "type": "int"}, {"q": "√361 = ?", "a": "19", "type": "int"}, {"q": "√441 = ?", "a": "21", "type": "int"}, {"q": "√529 = ?", "a": "23", "type": "int"}, {"q": "√576 = ?", "a": "24", "type": "int"}, {"q": "√676 = ?", "a": "26", "type": "int"}, {"q": "√784 = ?", "a": "28", "type": "int"}, {"q": "Which number squared gives 400?", "a": "20", "type": "int"}, {"q": "Which number squared gives 625?", "a": "25", "type": "int"}, {"q": "Which number squared gives 729?", "a": "27", "type": "int"}, {"q": "Which number squared gives 841?", "a": "29", "type": "int"}, {"q": "Which number squared gives 961?", "a": "31", "type": "int"}, {"q": "25² − 18² = ?", "a": "301", "type": "int"}, {"q": "30² − 22² = ?", "a": "416", "type": "int"}, {"q": "19² − 11² = ?", "a": "240", "type": "int"}, {"q": "27² − 14² = ?", "a": "533", "type": "int"}, {"q": "23² − 16² = ?", "a": "273", "type": "int"}], "level3": [{"q": "4³ = ?", "a": "64", "type": "int"}, {"q": "5³ = ?", "a": "125", "type": "int"}, {"q": "6³ = ?", "a": "216", "type": "int"}, {"q": "7³ = ?", "a": "343", "type": "int"}, {"q": "8³ = ?", "a": "512", "type": "int"}, {"q": "9³ = ?", "a": "729", "type": "int"}, {"q": "11³ = ?", "a": "1331", "type": "int"}, {"q": "12³ = ?", "a": "1728", "type": "int"}, {"q": "13³ = ?", "a": "2197", "type": "int"}, {"q": "14³ = ?", "a": "2744", "type": "int"}, {"q": "16³ = ?", "a": "4096", "type": "int"}, {"q": "18³ = ?", "a": "5832", "type": "int"}, {"q": "∛27 = ?", "a": "3", "type": "int"}, {"q": "∛216 = ?", "a": "6", "type": "int"}, {"q": "∛343 = ?", "a": "7", "type": "int"}, {"q": "∛729 = ?", "a": "9", "type": "int"}, {"q": "∛1000 = ?", "a": "10", "type": "int"}, {"q": "∛1728 = ?", "a": "12", "type": "int"}, {"q": "∛3375 = ?", "a": "15", "type": "int"}, {"q": "∛4913 = ?", "a": "17", "type": "int"}, {"q": "Which number has cube 512?", "a": "8", "type": "int"}, {"q": "Which number has cube 1331?", "a": "11", "type": "int"}, {"q": "Which number has cube 2197?", "a": "13", "type": "int"}, {"q": "Which number has cube 4096?", "a": "16", "type": "int"}, {"q": "Which number has cube 6859?", "a": "19", "type": "int"}, {"q": "15³ − 10³ = ?", "a": "2375", "type": "int"}, {"q": "12³ + 8³ = ?", "a": "2240", "type": "int"}, {"q": "9³ + 6³ = ?", "a": "945", "type": "int"}, {"q": "14³ − 9³ = ?", "a": "2015", "type": "int"}, {"q": "10³ + 7³ = ?", "a": "1343", "type": "int"}], "level4": [{"q": "Convert 1/7 to a percentage (round to 2 decimal places).", "a": "14.29", "type": "percent"}, {"q": "What percentage is 5/9? (2 decimal places)", "a": "55.56", "type": "percent"}, {"q": "Express 7/12 as a percentage, rounded to 2 decimal places.", "a": "58.33", "type": "percent"}, {"q": "Convert 11/16 to a percentage (round to 2 decimal places).", "a": "68.75", "type": "percent"}, {"q": "What percentage is 1/18? (2 decimal places)", "a": "5.56", "type": "percent"}, {"q": "Express 2/7 as a percentage, rounded to 2 decimal places.", "a": "28.57", "type": "percent"}, {"q": "Convert 1/8 to a percentage (round to 2 decimal places).", "a": "12.50", "type": "percent"}, {"q": "What percentage is 1/9? (2 decimal places)", "a": "11.11", "type": "percent"}, {"q": "Express 1/6 as a percentage, rounded to 2 decimal places.", "a": "16.67", "type": "percent"}, {"q": "Convert 5/6 to a percentage (round to 2 decimal places).", "a": "83.33", "type": "percent"}, {"q": "What percentage is 3/7? (2 decimal places)", "a": "42.86", "type": "percent"}, {"q": "Express 4/9 as a percentage, rounded to 2 decimal places.", "a": "44.44", "type": "percent"}, {"q": "Convert 5/12 to a percentage (round to 2 decimal places).", "a": "41.67", "type": "percent"}, {"q": "What percentage is 7/16? (2 decimal places)", "a": "43.75", "type": "percent"}, {"q": "Express 1/3 as a percentage, rounded to 2 decimal places.", "a": "33.33", "type": "percent"}, {"q": "Convert 2/3 to a percentage (round to 2 decimal places).", "a": "66.67", "type": "percent"}, {"q": "What percentage is 1/4? (2 decimal places)", "a": "25.00", "type": "percent"}, {"q": "Express 3/4 as a percentage, rounded to 2 decimal places.", "a": "75.00", "type": "percent"}, {"q": "Convert 1/16 to a percentage (round to 2 decimal places).", "a": "6.25", "type": "percent"}, {"q": "What percentage is 3/16? (2 decimal places)", "a": "18.75", "type": "percent"}, {"q": "Express 5/7 as a percentage, rounded to 2 decimal places.", "a": "71.43", "type": "percent"}, {"q": "Convert 4/7 to a percentage (round to 2 decimal places).", "a": "57.14", "type": "percent"}, {"q": "What percentage is 1/12? (2 decimal places)", "a": "8.33", "type": "percent"}, {"q": "Express 7/9 as a percentage, rounded to 2 decimal places.", "a": "77.78", "type": "percent"}, {"q": "Convert 2/9 to a percentage (round to 2 decimal places).", "a": "22.22", "type": "percent"}, {"q": "What percentage is 9/16? (2 decimal places)", "a": "56.25", "type": "percent"}, {"q": "Express 1/17 as a percentage, rounded to 2 decimal places.", "a": "5.88", "type": "percent"}, {"q": "Convert 5/18 to a percentage (round to 2 decimal places).", "a": "27.78", "type": "percent"}, {"q": "What percentage is 1/19? (2 decimal places)", "a": "5.26", "type": "percent"}, {"q": "Express 1/11 as a percentage, rounded to 2 decimal places.", "a": "9.09", "type": "percent"}], "level5": [{"q": "23 × 7 = ?", "a": "161", "type": "int"}, {"q": "18 × 9 = ?", "a": "162", "type": "int"}, {"q": "25 × 6 = ?", "a": "150", "type": "int"}, {"q": "17 × 8 = ?", "a": "136", "type": "int"}, {"q": "22 × 7 = ?", "a": "154", "type": "int"}, {"q": "19 × 9 = ?", "a": "171", "type": "int"}, {"q": "24 × 8 = ?", "a": "192", "type": "int"}, {"q": "16 × 7 = ?", "a": "112", "type": "int"}, {"q": "27² = ?", "a": "729", "type": "int"}, {"q": "32² = ?", "a": "1024", "type": "int"}, {"q": "36² = ?", "a": "1296", "type": "int"}, {"q": "√1225 = ?", "a": "35", "type": "int"}, {"q": "√1444 = ?", "a": "38", "type": "int"}, {"q": "12³ = ?", "a": "1728", "type": "int"}, {"q": "15³ = ?", "a": "3375", "type": "int"}, {"q": "17³ = ?", "a": "4913", "type": "int"}, {"q": "∛5832 = ?", "a": "18", "type": "int"}, {"q": "∛8000 = ?", "a": "20", "type": "int"}, {"q": "3/8 as a percentage (2 decimal places)", "a": "37.50", "type": "percent"}, {"q": "5/12 as a percentage (2 decimal places)", "a": "41.67", "type": "percent"}, {"q": "7/15 as a percentage (2 decimal places)", "a": "46.67", "type": "percent"}, {"q": "11/16 as a percentage (2 decimal places)", "a": "68.75", "type": "percent"}, {"q": "5/9 as a percentage (2 decimal places)", "a": "55.56", "type": "percent"}, {"q": "7/13 as a percentage (2 decimal places)", "a": "53.85", "type": "percent"}, {"q": "27² + 18² = ?", "a": "1053", "type": "int"}, {"q": "35² − 24² = ?", "a": "649", "type": "int"}, {"q": "(23 × 9) − 18² = ?", "a": "-117", "type": "int"}, {"q": "(16³ ÷ 8³) + 27 = ?", "a": "35", "type": "int"}, {"q": "32² − 15³ ÷ 5 = ?", "a": "349", "type": "int"}, {"q": "(24 × 8) + 18² − 10³ ÷ 8 = ?", "a": "391", "type": "int"}]};
+
+  var LEVEL_META = [
+    { key:"level1", title:"TABLE TROUBLE", rewardEmoji:"🍫", rewardName:"CHOCOLATE" },
+    { key:"level2", title:"SQUARE HUNT", rewardEmoji:"🍦", rewardName:"ICE CREAM" },
+    { key:"level3", title:"CUBE CHAMBER", rewardEmoji:"🍰", rewardName:"TRUFFLE PASTRY" },
+    { key:"level4", title:"PERCENTAGE PANIC", rewardEmoji:"🥞", rewardName:"DOSA" },
+    { key:"level5", title:"THE FINAL BOSS", rewardEmoji:"🧹", rewardName:"ARYAN KA ROOM SAAF KARWANA" }
+  ];
+
+  var TEASE_NOTES = [
+    "ARYAN'S SCORE = 0 FOR LEVEL 1",
+    "ARYAN COULDN'T EVEN CLEAR THE 1ST LEVEL 😭",
+    "ARYAN IS STILL STUCK ON LEVEL 1. YOU'RE THREE LEVELS AHEAD 🏆",
+    "AT THIS POINT ARYAN HAS QUIETLY GIVEN UP. YOU'RE ON LEVEL 4 😌",
+    "ARYAN IS SOMEWHERE CRYING. YOU JUST FOUGHT THE FINAL BOSS 👑"
+  ];
+
+  var PASS_SCORE = 20;
+  var LEVEL_TIMES = [180, 240, 240, 180, 300]; // seconds
+
+  // ---------------- STATE ----------------
+  var state = {
+    levels: LEVEL_META.map(function(m, i){
+      return { unlocked: i === 0, completed: false, bestScore: null };
+    }),
+    currentLevelIdx: null,
+    questions: [],
+    qIndex: 0,
+    score: 0,
+    answered: false,
+    timeLeft: LEVEL_TIME,
+    timeUsed: 0,
+    timerId: null,
+    attemptLog: [], // {q, given, correct, isCorrect}
+    lastResult: null
+  };
+
+  // ---------------- HELPERS ----------------
+  function $(id){ return document.getElementById(id); }
+  function show(screenId){
+    var all = document.querySelectorAll(".screen");
+    for (var i=0;i<all.length;i++){ all[i].classList.remove("active"); }
+    $(screenId).classList.add("active");
+    window.scrollTo(0,0);
+  }
+  function shuffle(arr){
+    var a = arr.slice();
+    for (var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var tmp = a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+  function fmtTime(sec){
+    sec = Math.max(0, Math.floor(sec));
+    var m = Math.floor(sec/60);
+    var s = sec%60;
+    return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+  }
+  function classify(score){
+    if (score <= 19) return { label:"Lets try again champ! 💪", passed:false };
+    if (score <= 23) return { label:"LEVEL CLEARED ✅", passed:true };
+    if (score <= 26) return { label:"GOOD JOB ⭐", passed:true };
+    if (score <= 29) return { label:"EXCELLENT 🔥", passed:true };
+    return { label:"PERFECT SCORE 👑", passed:true };
+  }
+  function checkAnswer(q, raw){
+    var val = String(raw == null ? "" : raw).trim();
+    if (val === "") return false;
+    if (q.type === "int"){
+      var cleaned = val.replace(/\s+/g,"");
+      if (!/^-?\d+$/.test(cleaned)) return false;
+      return parseInt(cleaned,10) === parseInt(q.a,10);
+    } else if (q.type === "percent"){
+      var cleaned2 = val.replace(/\s+/g,"").replace(/%$/,"");
+      if (!/^-?\d+(\.\d+)?$/.test(cleaned2)) return false;
+      var num = parseFloat(cleaned2);
+      var expected = parseFloat(q.a);
+      return Math.abs(num - expected) < 0.005;
+    }
+    return false;
+  }
+  function displayAnswer(q){
+    return q.type === "percent" ? (q.a + "%") : q.a;
+  }
+
+  // ---------------- INSTRUCTIONS -> MAP ----------------
+  $("btn-begin").addEventListener("click", function(){
+    renderMap();
+    show("screen-map");
+  });
+
+  // ---------------- LEVEL MAP ----------------
+  function renderMap(){
+    var completedCount = state.levels.filter(function(l){return l.completed;}).length;
+    var currentDisplay = Math.min(completedCount+1, 5);
+    $("map-progress-label").textContent = "LEVEL " + currentDisplay + " OF 5";
+    $("map-progress-fill").style.width = (completedCount/5*100) + "%";
+
+    var list = $("map-list");
+    list.innerHTML = "";
+    for (var i=0;i<5;i++){
+      var meta = LEVEL_META[i];
+      var lvl = state.levels[i];
+      var node = document.createElement("div");
+      node.className = "level-node" + (lvl.unlocked ? "" : " locked");
+
+      var emoji, rewardLine, statusHtml;
+      if (lvl.completed){
+        emoji = meta.rewardEmoji;
+        rewardLine = meta.rewardName;
+        statusHtml = '<span class="lvl-status status-cleared">✓ CLEARED</span>';
+      } else {
+        emoji = "🎁";
+        rewardLine = "SURPRISE REWARD";
+        statusHtml = lvl.unlocked
+          ? '<span class="lvl-status status-available">AVAILABLE</span>'
+          : '<span class="lvl-status status-locked">LOCKED</span>';
+      }
+
+      node.innerHTML =
+        '<div class="lvl-emoji">'+emoji+'</div>'+
+        '<div class="lvl-info">'+
+          '<div class="lvl-title">'+(i+1)+'. '+meta.title+'</div>'+
+          '<div class="lvl-reward">'+rewardLine+'</div>'+
+        '</div>'+ statusHtml;
+
+      (function(idx, unlocked){
+        node.addEventListener("click", function(){
+          if (unlocked) startLevel(idx);
+        });
+      })(i, lvl.unlocked);
+      list.appendChild(node);
+    }
+  }
+
+  // ---------------- QUIZ FLOW ----------------
+  function startLevel(idx){
+    state.currentLevelIdx = idx;
+    state.questions = shuffle(QUESTIONS[LEVEL_META[idx].key]);
+    state.qIndex = 0;
+    state.score = 0;
+    state.answered = false;
+    state.timeLeft = (idx === 0 || idx === 3) ? 180 : (idx === 4 ? 300 : LEVEL_TIME);
+    state.attemptLog = [];
+    state.finished = false;
+
+    $("quiz-level-name").textContent = "LEVEL " + (idx+1) + " · " + LEVEL_META[idx].title;
+    show("screen-quiz");
+    renderQuestion();
+    startTimer();
+  }
+
+  function startTimer(){
+    if (state.timerId) clearInterval(state.timerId);
+    updateTimerDisplay();
+    state.timerId = setInterval(function(){
+      state.timeLeft -= 1;
+      if (state.timeLeft <= 0){
+        state.timeLeft = 0;
+        updateTimerDisplay();
+        clearInterval(state.timerId);
+        state.timerId = null;
+        finishLevel();
+        return;
+      }
+      updateTimerDisplay();
+    }, 1000);
+  }
+
+  function updateTimerDisplay(){
+    var el = $("quiz-timer");
+    el.textContent = fmtTime(state.timeLeft);
+    if (state.timeLeft <= 30){ el.classList.add("warn"); } else { el.classList.remove("warn"); }
+  }
+
+  function renderQuestion(){
+    if (state.qIndex >= 30){
+      finishLevel();
+      return;
+    }
+    state.answered = false;
+    var q = state.questions[state.qIndex];
+    $("quiz-qcount").textContent = "Question " + (state.qIndex+1) + " / 30";
+    $("quiz-question").textContent = q.q;
+    var input = $("quiz-input");
+    input.value = "";
+    $("quiz-submit").disabled = false;
+    $("quiz-card").classList.remove("flash-correct","flash-wrong");
+    setTimeout(function(){ input.focus(); }, 30);
+  }
+
+  function submitCurrentAnswer(){
+    if (state.answered) return;
+    if (state.timeLeft <= 0) return;
+    state.answered = true;
+    $("quiz-submit").disabled = true;
+
+    var q = state.questions[state.qIndex];
+    var raw = $("quiz-input").value;
+    var given = String(raw).trim();
+    var correct = checkAnswer(q, raw);
+
+    state.attemptLog.push({ q: q.q, given: given, correctAnswer: displayAnswer(q), isCorrect: correct });
+
+    if (correct){
+      state.score = Math.min(30, state.score + 1);
+      $("quiz-card").classList.add("flash-correct");
+    } else {
+      $("quiz-card").classList.add("flash-wrong");
+    }
+
+    setTimeout(function(){
+      if (state.finished) return;
+      state.qIndex += 1;
+      if (state.qIndex >= 30 || state.timeLeft <= 0){
+        finishLevel();
+      } else {
+        renderQuestion();
+      }
+    }, 320);
+  }
+
+  $("quiz-submit").addEventListener("click", submitCurrentAnswer);
+  $("quiz-input").addEventListener("keydown", function(e){
+    if (e.key === "Enter"){ e.preventDefault(); submitCurrentAnswer(); }
+  });
+
+  function finishLevel(){
+    if (state.finished) return;
+    state.finished = true;
+    if (state.timerId){ clearInterval(state.timerId); state.timerId = null; }
+    // fill in unanswered remaining questions as blank/incorrect for the log
+    for (var i = state.attemptLog.length; i < 30; i++){
+      var q = state.questions[i];
+      state.attemptLog.push({ q: q.q, given: "", correctAnswer: displayAnswer(q), isCorrect: false });
+    }
+
+    var idx = state.currentLevelIdx;
+    var score = Math.max(0, Math.min(30, state.score));
+    var result = classify(score);
+    var levelTime = (idx === 0 || idx === 3) ? 180 : (idx === 4 ? 300 : LEVEL_TIME);
+    state.timeUsed = levelTime - state.timeLeft;
+    state.lastResult = { score: score, timeUsed: state.timeUsed, passed: result.passed, label: result.label, levelIdx: idx };
+
+    if (result.passed){
+      state.levels[idx].completed = true;
+      state.levels[idx].bestScore = score;
+      if (idx+1 < 5) state.levels[idx+1].unlocked = true;
+    }
+
+    renderReview();
+    show("screen-review");
+  }
+
+  // ---------------- REVIEW ----------------
+  function renderReview(){
+    var idx = state.currentLevelIdx;
+    $("review-sub").textContent = "LEVEL " + (idx+1) + " · " + LEVEL_META[idx].title;
+    var wrap = $("review-list");
+    wrap.innerHTML = "";
+    state.attemptLog.forEach(function(item, i){
+      var div = document.createElement("div");
+      div.className = "review-item " + (item.isCorrect ? "correct" : "wrong");
+      var yourAns = item.given === "" ? "(no answer)" : item.given;
+      var qEl = document.createElement("div");
+      qEl.className = "ri-q";
+      var mark = document.createElement("span");
+      mark.className = "ri-mark";
+      mark.textContent = item.isCorrect ? "✓" : "✗";
+      qEl.appendChild(mark);
+      qEl.appendChild(document.createTextNode("Question " + (i+1) + " • " + item.q));
+      var line = document.createElement("div");
+      line.className = "ri-line";
+      var your = document.createElement("span");
+      your.textContent = "Your answer: " + yourAns;
+      var correctEl = document.createElement("span");
+      correctEl.textContent = "Correct: " + item.correctAnswer;
+      line.appendChild(your);
+      line.appendChild(correctEl);
+      div.appendChild(qEl);
+      div.appendChild(line);
+      wrap.appendChild(div);
+    });
+  }
+
+  $("review-continue-btn").addEventListener("click", function(){
+    renderResult();
+    show("screen-result");
+  });
+
+  // ---------------- RESULT ----------------
+  function renderResult(){
+    var r = state.lastResult;
+    var idx = r.levelIdx;
+    var accuracy = Math.round((r.score/30)*100);
+
+    $("result-status").textContent = r.label;
+    $("result-score").textContent = r.score + " / 30";
+    $("result-accuracy").textContent = accuracy + "%";
+    $("result-time").textContent = fmtTime(r.timeUsed);
+    $("tease-note").textContent = TEASE_NOTES[idx];
+
+    var failBlock = $("result-fail-block");
+    if (r.passed){
+      failBlock.style.display = "none";
+      $("result-primary-btn").textContent = "CLAIM YOUR REWARD";
+    } else {
+      failBlock.style.display = "block";
+      $("result-fail-note").innerHTML = "SO CLOSE 😭<br><br>You needed 20.<br>You got " + r.score + ".<br><br>Don't worry.<br>You get another chance.";
+      $("result-primary-btn").textContent = "RETRY LEVEL";
+    }
+  }
+
+  $("result-primary-btn").addEventListener("click", function(){
+    var r = state.lastResult;
+    if (!r.passed){
+      startLevel(r.levelIdx);
+      return;
+    }
+    renderRewardReveal(r.levelIdx);
+    show("screen-reward");
+  });
+
+  $("result-map-btn").addEventListener("click", function(){
+    renderMap();
+    show("screen-map");
+  });
+
+  // ---------------- REWARD REVEAL ----------------
+  function renderRewardReveal(idx){
+    var meta = LEVEL_META[idx];
+    $("reward-gift").style.display = "block";
+    $("reward-emoji-big").style.display = "none";
+    $("reward-name-big").style.display = "none";
+    $("reward-unlocked-tag").style.display = "none";
+    $("reward-continue-btn").style.display = "none";
+
+    setTimeout(function(){
+      $("reward-gift").style.display = "none";
+      $("reward-emoji-big").textContent = meta.rewardEmoji;
+      $("reward-emoji-big").style.display = "block";
+      $("reward-name-big").textContent = meta.rewardName;
+      $("reward-name-big").style.display = "block";
+      $("reward-unlocked-tag").style.display = "block";
+      $("reward-continue-btn").style.display = "inline-flex";
+      $("reward-continue-btn").textContent = (idx === 4) ? "SEE FINAL RESULT" : "CONTINUE";
+    }, 900);
+  }
+
+  $("reward-continue-btn").addEventListener("click", function(){
+    var idx = state.lastResult.levelIdx;
+    if (idx === 4){
+      renderVictory();
+      show("screen-victory");
+    } else {
+      renderMap();
+      show("screen-map");
+    }
+  });
+
+  // ---------------- FINAL VICTORY ----------------
+  function renderVictory(){
+    var wrap = $("victory-summary");
+    wrap.innerHTML = "";
+    for (var i=0;i<5;i++){
+      var row = document.createElement("div");
+      row.className = "summary-row";
+      var score = state.levels[i].bestScore != null ? state.levels[i].bestScore : 0;
+      row.innerHTML = "<span>Level "+(i+1)+": "+LEVEL_META[i].title+"</span><span>"+score+"/30 ✓</span>";
+      wrap.appendChild(row);
+    }
+  }
+
+  $("victory-map-btn").addEventListener("click", function(){
+    renderMap();
+    show("screen-map");
+  });
+
+  $("victory-scorecard-btn").addEventListener("click", function(){
+    renderScoreCard();
+    show("screen-scorecard");
+  });
+
+  // ---------------- SCORE CARD ----------------
+  function renderScoreCard(){
+    var wrap = $("scorecard-summary");
+    wrap.innerHTML = "";
+    var clearedCount = 0;
+    for (var i=0;i<5;i++){
+      var row = document.createElement("div");
+      row.className = "summary-row";
+      var score = state.levels[i].bestScore != null ? state.levels[i].bestScore : 0;
+      if (state.levels[i].completed) clearedCount++;
+      row.innerHTML = "<span>Level "+(i+1)+": "+LEVEL_META[i].title+"</span><span>"+score+"/30 ✓</span>";
+      wrap.appendChild(row);
+    }
+    $("sc-levels-cleared").textContent = clearedCount + "/5";
+  }
+
+  $("scorecard-back-btn").addEventListener("click", function(){
+    show("screen-victory");
+  });
+
+})();
+</script>
+</body>
+</html>
