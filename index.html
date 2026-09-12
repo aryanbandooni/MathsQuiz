@@ -508,7 +508,7 @@
     state.qIndex = 0;
     state.score = 0;
     state.answered = false;
-    state.timeLeft = LEVEL_TIME;
+    state.timeLeft = idx === 4 ? 360 : LEVEL_TIME;
     state.attemptLog = [];
 
     $("quiz-level-name").textContent = "LEVEL " + (idx+1) + " · " + LEVEL_META[idx].title;
