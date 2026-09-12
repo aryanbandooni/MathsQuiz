@@ -2,528 +2,950 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>The Ultimate Test: Kratika vs. Shakuntala Devi</title>
 <style>
   :root{
-    --bg: #FBF3DA;
-    --bg-soft: #FFF9E9;
-    --card: #FFFDF6;
-    --border: #EFDFAE;
-    --text: #4A3C24;
-    --text-soft: #8A7A54;
-    --accent: #E8A33D;
-    --accent-dark: #C97F1E;
-    --accent-soft: #F6D98B;
-    --good: #7FA86B;
-    --good-bg: #E9F2E3;
-    --bad: #D97B6C;
-    --bad-bg: #FBEAE6;
-    --shadow: 0 6px 18px rgba(150, 115, 40, 0.12);
-    --radius: 22px;
+    --cream:#FFFBF1;
+    --paper:#FFF8E7;
+    --pastel-yellow:#FBEFC2;
+    --sunflower:#F3C23D;
+    --sunflower-deep:#D99E1E;
+    --ink:#4A3B24;
+    --ink-soft:#8A7A5C;
+    --line:#EAD9A0;
+    --white:#FFFFFF;
+    --good:#5E9E6B;
+    --good-bg:#E7F3E9;
+    --bad:#C96A4F;
+    --bad-bg:#FBEAE4;
+    --shadow: 0 10px 24px rgba(74,59,20,0.10), 0 2px 6px rgba(74,59,20,0.08);
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
   }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body {
-    margin:0; padding:0; overflow-x:hidden; width:100%;
-    background: var(--bg);
-    color: var(--text);
-    font-family: ui-rounded, "Nunito", "Segoe UI", Verdana, system-ui, sans-serif;
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0; padding:0;
+    width:100%;
+    overflow-x:hidden;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
   }
+
+  h1,h2,h3, .display{
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    color:var(--ink);
+    margin:0;
+  }
+
   body{
+    background-image:
+      radial-gradient(circle at 8% 6%, rgba(243,194,61,0.20) 0, transparent 40%),
+      radial-gradient(circle at 94% 12%, rgba(243,194,61,0.16) 0, transparent 38%),
+      radial-gradient(circle at 90% 92%, rgba(243,194,61,0.14) 0, transparent 40%);
     min-height:100vh;
-    background:
-      radial-gradient(circle at 8% 12%, rgba(244,201,110,0.35) 0, transparent 45%),
-      radial-gradient(circle at 92% 85%, rgba(244,201,110,0.30) 0, transparent 40%),
-      var(--bg);
-    display:flex; justify-content:center;
   }
-  #app{
-    width:100%; max-width:520px;
+
+  .app-shell{
+    max-width:560px;
+    margin:0 auto;
     min-height:100vh;
+    padding:20px 16px 40px;
     position:relative;
-    padding: 18px 16px 40px;
-    display:flex; flex-direction:column;
   }
-  .decor-sunflower{
-    position:absolute; font-size:24px; opacity:0.32; pointer-events:none; user-select:none;
+
+  .screen{ display:none; animation: fadeIn .35s ease; }
+  .screen.active{ display:block; }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform:translateY(6px); }
+    to{ opacity:1; transform:translateY(0); }
   }
-  .screen{ display:none; flex-direction:column; flex:1; animation: fadeIn 0.35s ease; }
-  .screen.active{ display:flex; }
-  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 
-  h1,h2,h3{ margin:0; }
-  p{ margin:0; }
+  /* ---------- Decorative sunflower ---------- */
+  .bloom{
+    position:absolute;
+    pointer-events:none;
+    opacity:0.5;
+  }
+  .bloom svg{ display:block; }
 
+  /* ---------- Cards ---------- */
   .card{
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 20px 18px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);
+    padding:22px;
   }
 
+  /* ---------- Buttons ---------- */
   .btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    background: linear-gradient(180deg, var(--accent), var(--accent-dark));
-    color: #fff; font-weight:800; letter-spacing:0.3px;
-    border:none; border-radius: 999px;
-    padding: 15px 22px; font-size: 16.5px;
-    box-shadow: 0 6px 14px rgba(201,127,30,0.35);
-    cursor:pointer; width:100%;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-  }
-  .btn:active{ transform: scale(0.97); box-shadow: 0 3px 8px rgba(201,127,30,0.30); }
-  .btn:disabled{ opacity:0.5; cursor:default; }
-  .btn-ghost{
-    background: transparent; color: var(--accent-dark);
-    border: 2px solid var(--accent-soft); box-shadow:none; font-weight:700;
-  }
-
-  .app-brand{ text-align:center; font-size:11.5px; font-weight:800; letter-spacing:0.6px; color:var(--accent-dark); text-transform:uppercase; }
-
-  /* ---------- INSTRUCTIONS ---------- */
-  #screen-instructions{ justify-content:center; gap:14px; }
-  .instr-emoji{ text-align:center; font-size:40px; }
-  .instr-title{ text-align:center; font-size:24px; font-weight:900; margin-top:6px; }
-  .instr-list{ list-style:none; padding:0; margin:14px 0 0; display:flex; flex-direction:column; gap:8px; }
-  .instr-list li{ font-size:14px; line-height:1.4; padding-left:22px; position:relative; color:var(--text); }
-  .instr-list li:before{ content:"•"; position:absolute; left:6px; color:var(--accent-dark); font-weight:900; }
-  .instr-tease{ text-align:center; font-size:13.5px; color: var(--text-soft); margin-top:14px; line-height:1.6; font-style:italic; }
-
-  /* ---------- LEVEL MAP ---------- */
-  .map-header{ text-align:center; margin-bottom:6px; }
-  .map-header h2{ font-size:19px; }
-  .progressbar-wrap{ background:var(--bg-soft); border:1px solid var(--border); border-radius:999px; height:10px; margin:10px 0 4px; overflow:hidden; }
-  .progressbar-fill{ height:100%; background: linear-gradient(90deg, var(--accent-soft), var(--accent)); border-radius:999px; transition: width 0.4s ease; }
-  .progress-label{ text-align:center; font-size:12.5px; color:var(--text-soft); margin-bottom:14px; }
-
-  .level-node{
-    display:flex; align-items:center; gap:14px;
-    background: var(--card); border:1px solid var(--border); border-radius:18px;
-    padding:14px 16px; margin-bottom:10px; box-shadow: var(--shadow);
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    padding:15px 18px;
+    font-size:16px;
+    font-weight:700;
+    font-family:inherit;
+    border-radius:999px;
+    border:none;
     cursor:pointer;
+    transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    -webkit-user-select:none;
+    user-select:none;
   }
-  .level-node.locked{ opacity:0.55; cursor:default; }
-  .level-node .lvl-emoji{ font-size:28px; width:44px; text-align:center; }
-  .level-node .lvl-info{ flex:1; }
-  .level-node .lvl-info .lvl-title{ font-weight:800; font-size:15px; }
-  .level-node .lvl-info .lvl-reward{ font-size:12px; color: var(--text-soft); margin-top:2px; }
-  .level-node .lvl-status{ font-size:11px; font-weight:800; padding:5px 10px; border-radius:999px; white-space:nowrap; }
-  .status-available{ background:#FCE7BB; color:#8A5A12; }
-  .status-locked{ background:#EDE6D0; color:#A79768; }
-  .status-cleared{ background:#DCEBD3; color:#3F6B2C; }
+  .btn:active{ transform:scale(0.97); }
+  .btn:disabled{ opacity:0.55; cursor:default; transform:none; }
 
-  /* ---------- QUIZ ---------- */
-  .quiz-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:2px; }
-  .quiz-app-name{ font-size:10.5px; font-weight:800; color: var(--text-soft); letter-spacing:0.4px; }
-  .quiz-level-name{ font-size:12.5px; font-weight:800; color: var(--accent-dark); letter-spacing:0.4px; }
-  .quiz-timer{
-    font-variant-numeric: tabular-nums; font-weight:800; font-size:16px;
-    background: var(--bg-soft); border:1px solid var(--border); border-radius:999px;
-    padding:6px 12px;
+  .btn-primary{
+    background:linear-gradient(180deg, var(--sunflower), var(--sunflower-deep));
+    color:#3B2E12;
+    box-shadow: 0 8px 18px rgba(217,158,30,0.35);
   }
-  .quiz-timer.warn{ color: var(--bad); animation: pulseSoft 1.4s ease-in-out infinite; }
-  @keyframes pulseSoft{ 0%,100%{opacity:1;} 50%{opacity:0.55;} }
+  .btn-secondary{
+    background:var(--white);
+    color:var(--ink);
+    border:1.5px solid var(--line);
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink-soft);
+    border:1.5px solid var(--line);
+    padding:10px 14px;
+    font-size:13px;
+    width:auto;
+  }
 
-  .quiz-toprow{ display:flex; justify-content:space-between; align-items:center; margin: 8px 0 12px; }
-  .quiz-qcount{ font-size:12.5px; color:var(--text-soft); }
+  /* ---------- Intro screen ---------- */
+  .title-wrap{ text-align:center; padding:18px 6px 10px; }
+  .kicker{
+    font-size:13px;
+    letter-spacing:0.4px;
+    color:var(--sunflower-deep);
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  .game-title{
+    font-size:28px;
+    line-height:1.25;
+  }
+  .game-title .vs{
+    display:block;
+    font-size:16px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin-top:6px;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
 
-  .quiz-card{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:18px; min-height: 42vh; }
-  .quiz-question{ font-size: clamp(20px, 6vw, 25px); font-weight:800; text-align:center; line-height:1.4; }
+  .rules-list{
+    list-style:none;
+    margin:16px 0 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .rules-list li{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    line-height:1.5;
+    color:var(--ink);
+  }
+  .rules-list li .dot{
+    flex:0 0 auto;
+    width:8px;height:8px;
+    border-radius:50%;
+    background:var(--sunflower);
+    margin-top:6px;
+  }
 
+  .timer-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:14px;
+    font-size:14px;
+  }
+  .timer-table th, .timer-table td{
+    text-align:left;
+    padding:8px 6px;
+    border-bottom:1px solid var(--line);
+  }
+  .timer-table th{ color:var(--ink-soft); font-weight:600; }
+
+  /* ---------- Progress bar ---------- */
+  .progress-wrap{ margin:14px 0 18px; }
+  .progress-label{
+    display:flex; justify-content:space-between;
+    font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-weight:600;
+  }
+  .progress-track{
+    width:100%; height:10px; border-radius:999px;
+    background:var(--pastel-yellow);
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--sunflower), var(--sunflower-deep));
+    width:0%;
+    transition:width .4s ease;
+  }
+
+  /* ---------- Level map ---------- */
+  .level-list{
+    display:flex; flex-direction:column; gap:14px;
+    margin-top:6px;
+  }
+  .level-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px;
+    border-radius:var(--radius-md);
+    border:1.5px solid var(--line);
+    background:var(--white);
+    position:relative;
+    text-align:left;
+    width:100%;
+    cursor:pointer;
+    font-family:inherit;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .level-card:active{ transform:scale(0.985); }
+  .level-card.locked{
+    cursor:not-allowed;
+    background:repeating-linear-gradient(135deg, #F5F0DF, #F5F0DF 10px, #F0E9D2 10px, #F0E9D2 20px);
+    opacity:0.75;
+  }
+  .level-card.current{
+    border-color:var(--sunflower-deep);
+    box-shadow:0 0 0 3px rgba(243,194,61,0.35), var(--shadow);
+  }
+  .level-card.completed{
+    border-color:var(--good);
+    background:var(--good-bg);
+  }
+  .level-num{
+    flex:0 0 auto;
+    width:44px; height:44px;
+    border-radius:50%;
+    background:var(--pastel-yellow);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:16px;
+    color:var(--sunflower-deep);
+    border:1.5px solid var(--line);
+  }
+  .level-card.completed .level-num{ background:var(--good); color:#fff; border-color:var(--good); }
+  .level-info{ flex:1 1 auto; min-width:0; }
+  .level-name{ font-size:16px; font-weight:800; margin-bottom:2px; }
+  .level-desc{ font-size:12.5px; color:var(--ink-soft); line-height:1.4; }
+  .level-status-tag{
+    font-size:11px; font-weight:700; margin-top:5px;
+    color:var(--good); display:none;
+  }
+  .level-card.completed .level-status-tag{ display:inline-block; }
+  .level-reward{
+    flex:0 0 auto;
+    font-size:26px;
+    width:44px; text-align:center;
+  }
+  .lock-icon{ font-size:20px; }
+
+  /* ---------- Quiz screen ---------- */
+  .quiz-header{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .quiz-header-left{ display:flex; flex-direction:column; }
+  .quiz-level-name{ font-size:13px; font-weight:700; color:var(--sunflower-deep); letter-spacing:0.3px; }
+  .quiz-qnum{ font-size:12.5px; color:var(--ink-soft); margin-top:2px; }
+
+  .stat-row{
+    display:flex; gap:10px; margin-bottom:14px;
+  }
+  .stat-pill{
+    flex:1;
+    background:var(--white);
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:9px 10px;
+    text-align:center;
+  }
+  .stat-pill .label{ font-size:10.5px; color:var(--ink-soft); font-weight:600; }
+  .stat-pill .value{ font-size:17px; font-weight:800; margin-top:2px; }
+  .stat-pill.timer-low .value{ color:var(--bad); }
+
+  .question-card{
+    background:var(--white);
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-lg);
+    padding:26px 20px;
+    text-align:center;
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+  }
+  .question-text{
+    font-size:26px;
+    font-family:Georgia, serif;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.4;
+    word-wrap:break-word;
+  }
+
+  .answer-form{ display:flex; flex-direction:column; gap:12px; }
   .answer-input{
-    width:100%; font-size:20px; padding:16px 18px; border-radius:16px;
-    border:2px solid var(--border); background: var(--bg-soft); color:var(--text);
-    text-align:center; font-weight:700;
+    width:100%;
+    padding:16px;
+    font-size:20px;
+    text-align:center;
+    border-radius:14px;
+    border:2px solid var(--line);
+    background:var(--white);
+    color:var(--ink);
+    font-weight:700;
+    outline:none;
   }
-  .answer-input:focus{ outline:none; border-color: var(--accent); }
+  .answer-input:focus{ border-color:var(--sunflower-deep); }
+  .answer-input.correct{ border-color:var(--good); background:var(--good-bg); }
+  .answer-input.wrong{ border-color:var(--bad); background:var(--bad-bg); }
 
-  .quiz-card.flash-correct{ animation: flashGood 0.4s ease; }
-  .quiz-card.flash-wrong{ animation: flashBad 0.4s ease; }
-  @keyframes flashGood{ 0%{ background: rgba(127,168,107,0.18);} 100%{ background: transparent; } }
-  @keyframes flashBad{ 0%{ background: rgba(217,123,108,0.18);} 100%{ background: transparent; } }
+  .feedback-msg{
+    min-height:20px;
+    text-align:center;
+    font-size:14px;
+    font-weight:700;
+  }
+  .feedback-msg.correct{ color:var(--good); }
+  .feedback-msg.wrong{ color:var(--bad); }
 
-  /* ---------- REVIEW ---------- */
-  .review-header{ text-align:center; margin-bottom:12px; }
-  .review-header h2{ font-size:18px; }
-  .review-sub{ text-align:center; font-size:12.5px; color:var(--text-soft); margin-bottom:12px; }
-  .review-list{ display:flex; flex-direction:column; gap:8px; overflow-y:auto; flex:1; padding-bottom:8px; }
+  .quiz-quit{
+    display:block;
+    text-align:center;
+    margin-top:16px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    text-decoration:underline;
+    background:none; border:none; cursor:pointer;
+    font-family:inherit;
+    width:100%;
+  }
+
+  /* ---------- Result screen ---------- */
+  .result-card{
+    text-align:center;
+    padding:26px 20px;
+  }
+  .result-status{
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:6px;
+  }
+  .result-status.pass{ color:var(--good); }
+  .result-status.fail{ color:var(--bad); }
+  .result-sub{ font-size:13.5px; color:var(--ink-soft); margin-bottom:14px; }
+  .score-big{
+    font-size:44px;
+    font-weight:800;
+    font-family:Georgia, serif;
+    margin:6px 0 2px;
+  }
+  .score-pct{ font-size:15px; color:var(--ink-soft); font-weight:700; margin-bottom:14px; }
+
+  .result-meta{
+    display:flex;
+    gap:10px;
+    margin:14px 0 6px;
+  }
+  .result-meta .stat-pill .value{ font-size:15px; }
+
+  .result-actions{ display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+
+  .review-toggle{
+    margin-top:18px;
+    text-align:center;
+  }
+
+  .review-list{
+    margin-top:14px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
   .review-item{
-    border-radius:14px; padding:10px 12px; border:1px solid var(--border);
-    background: var(--bg-soft); font-size:13px;
+    border-radius:14px;
+    padding:12px 14px;
+    border:1.5px solid var(--line);
+    background:var(--white);
+    text-align:left;
   }
-  .review-item.correct{ background: var(--good-bg); border-color:#CFE3C4; }
-  .review-item.wrong{ background: var(--bad-bg); border-color:#F0CFC7; }
-  .review-item .ri-q{ font-weight:800; margin-bottom:4px; }
-  .review-item .ri-line{ display:flex; justify-content:space-between; gap:6px; color:var(--text-soft); font-size:12.5px; }
-  .review-item .ri-mark{ font-weight:900; margin-right:4px; }
-  .review-item.correct .ri-mark{ color: var(--good); }
-  .review-item.wrong .ri-mark{ color: var(--bad); }
-  .review-footer{ margin-top:12px; }
-
-  /* ---------- RESULT ---------- */
-  #screen-result{ justify-content:center; }
-  .result-card{ text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center; }
-  .result-status{ font-size:15px; font-weight:900; letter-spacing:0.5px; }
-  .result-score{ font-size:42px; font-weight:900; }
-  .result-meta{ display:flex; gap:22px; justify-content:center; margin-top:2px; }
-  .result-meta div{ text-align:center; }
-  .result-meta .m-label{ font-size:11.5px; color:var(--text-soft); font-weight:700; }
-  .result-meta .m-value{ font-size:16px; font-weight:800; margin-top:2px; }
-  .fail-note{ font-size:14px; color:var(--text-soft); line-height:1.5; }
-  .tease-note{
-    margin-top:6px; padding:12px 14px; background: var(--bg-soft); border:1px dashed var(--accent-soft);
-    border-radius:14px; font-size:13px; font-weight:700; color: var(--accent-dark); line-height:1.5;
+  .review-item.correct{ border-color:var(--good); background:var(--good-bg); }
+  .review-item.wrong{ border-color:var(--bad); background:var(--bad-bg); }
+  .review-item .rh{
+    display:flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:800; margin-bottom:4px;
   }
-  .celebrate{ animation: pop 0.5s ease; }
-  @keyframes pop{ 0%{ transform:scale(0.7); opacity:0;} 60%{ transform:scale(1.08); opacity:1;} 100%{ transform:scale(1); } }
+  .review-item .rq{ font-size:14.5px; font-weight:700; margin-bottom:6px; }
+  .review-item .ra{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; }
+  .review-item .ra b{ color:var(--ink); }
 
-  /* ---------- REWARD REVEAL ---------- */
-  #screen-reward{ justify-content:center; align-items:center; text-align:center; }
-  .reward-box{ display:flex; flex-direction:column; align-items:center; gap:10px; }
-  .reward-pre{ font-size:15px; font-weight:800; color:var(--text-soft); }
-  .reward-gift{ font-size:56px; }
-  .reward-emoji-big{ font-size:60px; }
-  .reward-name-big{ font-size:19px; font-weight:900; }
-  .reward-unlocked-tag{ font-size:13px; font-weight:800; color: var(--good); margin-top:2px; }
+  /* ---------- Reward overlay ---------- */
+  .overlay{
+    position:fixed; inset:0;
+    background:rgba(74,59,20,0.45);
+    display:none;
+    align-items:center; justify-content:center;
+    padding:20px;
+    z-index:50;
+  }
+  .overlay.active{ display:flex; }
+  .reward-card{
+    background:var(--paper);
+    border-radius:24px;
+    padding:32px 24px;
+    text-align:center;
+    max-width:360px;
+    width:100%;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    animation: popIn .3s ease;
+  }
+  @keyframes popIn{
+    from{ transform:scale(0.85); opacity:0; }
+    to{ transform:scale(1); opacity:1; }
+  }
+  .reward-emoji{
+    font-size:64px;
+    margin-bottom:10px;
+    transition: transform .3s ease;
+  }
+  .reward-emoji.bounce{ animation: bounce .5s ease; }
+  @keyframes bounce{
+    0%{ transform:scale(0.6) rotate(-8deg); }
+    50%{ transform:scale(1.15) rotate(4deg); }
+    100%{ transform:scale(1) rotate(0); }
+  }
+  .reward-title{ font-size:13px; color:var(--sunflower-deep); font-weight:700; margin-bottom:4px; }
+  .reward-text{ font-size:19px; font-weight:800; margin-bottom:14px; }
+  .reward-note{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    font-style:italic;
+    padding:12px;
+    background:var(--pastel-yellow);
+    border-radius:12px;
+    margin-bottom:18px;
+    line-height:1.5;
+  }
 
-  /* ---------- REWARD JOURNEY (level map badges use same styles) ---------- */
+  /* ---------- Victory screen ---------- */
+  .victory-card{ text-align:center; padding:30px 22px; }
+  .victory-title{ font-size:24px; margin-bottom:4px; }
+  .victory-sub{ font-size:13px; color:var(--ink-soft); margin-bottom:16px; }
+  .victory-total{ font-size:46px; font-weight:800; font-family:Georgia,serif; }
+  .victory-max{ font-size:14px; color:var(--ink-soft); margin-bottom:18px; }
+  .victory-breakdown{
+    text-align:left;
+    display:flex; flex-direction:column; gap:8px;
+    margin:16px 0;
+  }
+  .vb-row{
+    display:flex; justify-content:space-between;
+    font-size:13.5px;
+    padding:8px 12px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:10px;
+  }
+  .victory-reward-emoji{ font-size:52px; margin:14px 0 4px; }
+  .victory-reward-text{ font-size:18px; font-weight:800; margin-bottom:12px; }
+  .victory-note{
+    font-size:13.5px; font-style:italic; color:var(--ink-soft);
+    background:var(--pastel-yellow);
+    padding:12px; border-radius:12px; margin-bottom:18px; line-height:1.5;
+  }
 
-  /* ---------- FINAL VICTORY / SCORECARD ---------- */
-  .victory-title{ font-size:21px; font-weight:900; text-align:center; }
-  .summary-row{ display:flex; justify-content:space-between; padding:8px 4px; border-bottom:1px solid var(--border); font-size:14px; font-weight:700; }
-  .summary-row:last-child{ border-bottom:none; }
-  .grand-reward{ text-align:center; margin-top:16px; padding:20px; border-radius:18px; background: linear-gradient(180deg, var(--accent-soft), var(--bg-soft)); border:1px solid var(--accent-soft); }
-  .grand-reward .g-emoji{ font-size:50px; }
-  .grand-reward .g-title{ font-weight:900; font-size:17px; margin-top:6px; }
-  .final-note{ text-align:center; font-size:13px; color:var(--text-soft); margin-top:10px; line-height:1.6; }
+  .footer-note{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin-top:26px;
+    opacity:0.8;
+  }
 
-  .scorecard-brand{ text-align:center; font-size:12px; font-weight:800; letter-spacing:0.4px; color:var(--accent-dark); line-height:1.4; }
-  .scorecard-title{ text-align:center; font-size:19px; font-weight:900; margin:8px 0 14px; }
-  .final-status{ text-align:center; font-weight:900; font-size:15px; margin-top:16px; padding:12px; border-radius:14px; background: var(--accent-soft); }
-
-  .stat-grid{ display:flex; justify-content:space-around; margin-top:14px; text-align:center; }
-  .stat-grid .s-num{ font-size:19px; font-weight:900; }
-  .stat-grid .s-label{ font-size:10.5px; color:var(--text-soft); font-weight:700; }
-
-  .center-text{ text-align:center; }
+  @media (max-width:360px){
+    .question-text{ font-size:22px; }
+    .game-title{ font-size:24px; }
+  }
 </style>
 </head>
 <body>
-<div id="app">
 
-  <div class="decor-sunflower" style="top:8px; left:6px;">🌻</div>
-  <div class="decor-sunflower" style="top:60px; right:10px; font-size:19px;">🌻</div>
-  <div class="decor-sunflower" style="bottom:20px; left:14px; font-size:17px;">🌻</div>
+<div class="app-shell" id="app">
 
-  <!-- INSTRUCTIONS SCREEN -->
-  <div class="screen active" id="screen-instructions">
-    <div class="app-brand">THE ULTIMATE TEST<br>KRATIKA VS. SHAKUNTALA DEVI</div>
-    <div class="instr-emoji">🌻</div>
-    <div class="instr-title">HOW TO PLAY</div>
-    <div class="card" style="margin-top:12px;">
-      <ul class="instr-list">
-        <li>There are 5 levels.</li>
-        <li>Each level has 30 questions.</li>
-        <li>You have 4 minutes for each level.</li>
-        <li>You must type your answers.</li>
-        <li>There are no MCQs.</li>
-        <li>Each correct answer gives 1 point.</li>
-        <li>Wrong answers give 0 points.</li>
-        <li>There is no negative marking.</li>
-        <li>You need at least 20/30 to clear a level.</li>
-        <li>If you fail, you can retry that level.</li>
-        <li>You can retry a level as many times as needed.</li>
-        <li>Previously cleared levels remain cleared.</li>
-        <li>Questions are shuffled every time you attempt a level.</li>
-        <li>Your reward is revealed only after you clear a level.</li>
-        <li>Complete all 5 levels to reach the Final Reward.</li>
+  <!-- ================= INTRO SCREEN ================= -->
+  <section class="screen active" id="screen-intro">
+    <div class="card">
+      <div class="title-wrap">
+        <div class="kicker">🌻 A STUDY CHALLENGE 🌻</div>
+        <h1 class="game-title">The Ultimate Test<span class="vs">Kratika vs. Shakuntala Devi</span></h1>
+      </div>
+
+      <ul class="rules-list">
+        <li><span class="dot"></span>There are 5 levels, each with 30 questions — 150 in total.</li>
+        <li><span class="dot"></span>You type each answer yourself — no multiple choice.</li>
+        <li><span class="dot"></span>Correct answer = 1 point. Wrong or unanswered = 0 points. No negative marking, ever.</li>
+        <li><span class="dot"></span>Passing score is 20 out of 30 for every level.</li>
+        <li><span class="dot"></span>You can retry a level as many times as you like — questions reshuffle every attempt.</li>
+        <li><span class="dot"></span>Once a level is cleared, it stays cleared for this session.</li>
       </ul>
-      <p class="instr-tease">Speed matters.<br>Accuracy matters.<br>And apparently, Aryan has decided this is a competition.</p>
-    </div>
-    <div style="margin-top:16px;">
-      <button class="btn" id="btn-begin">LET'S BEGIN 🌻</button>
-    </div>
-  </div>
 
-  <!-- LEVEL MAP -->
-  <div class="screen" id="screen-map">
-    <div class="app-brand" style="margin-bottom:8px;">THE ULTIMATE TEST</div>
-    <div class="map-header"><h2>🌻 YOUR JOURNEY</h2></div>
-    <div class="progress-label" id="map-progress-label">LEVEL 1 OF 5</div>
-    <div class="progressbar-wrap"><div class="progressbar-fill" id="map-progress-fill" style="width:0%"></div></div>
-    <div style="margin-top:16px;" id="map-list"></div>
-  </div>
+      <table class="timer-table">
+        <thead><tr><th>Level</th><th>Time limit</th></tr></thead>
+        <tbody>
+          <tr><td>1 — Table Trouble</td><td>3 minutes</td></tr>
+          <tr><td>2 — Square Hunt</td><td>4 minutes</td></tr>
+          <tr><td>3 — Cube Chamber</td><td>4 minutes</td></tr>
+          <tr><td>4 — Percentage Panic</td><td>3 minutes</td></tr>
+          <tr><td>5 — The Final Boss</td><td>5 minutes</td></tr>
+        </tbody>
+      </table>
 
-  <!-- QUIZ SCREEN -->
-  <div class="screen" id="screen-quiz">
-    <div class="quiz-top">
-      <span class="quiz-app-name">THE ULTIMATE TEST</span>
-      <span class="quiz-timer" id="quiz-timer">04:00</span>
+      <div style="margin-top:22px;">
+        <button class="btn btn-primary" id="btn-begin" type="button">LET'S BEGIN 🌻</button>
+      </div>
     </div>
-    <div class="quiz-toprow">
-      <span class="quiz-level-name" id="quiz-level-name">LEVEL 1 · TABLE TROUBLE</span>
-      <span class="quiz-qcount" id="quiz-qcount">Question 1 / 30</span>
-    </div>
-    <div class="card quiz-card" id="quiz-card">
-      <div class="quiz-question" id="quiz-question">—</div>
-      <input class="answer-input" id="quiz-input" type="text" inputmode="decimal" autocomplete="off" placeholder="Type your answer">
-      <button class="btn" id="quiz-submit">SUBMIT</button>
-    </div>
-  </div>
+    <div class="footer-note">Made with love, one multiplication table at a time.</div>
+  </section>
 
-  <!-- REVIEW SCREEN -->
-  <div class="screen" id="screen-review">
-    <div class="review-header"><h2>📋 ANSWER REVIEW</h2></div>
-    <div class="review-sub" id="review-sub">Here's how you did, question by question.</div>
-    <div class="review-list" id="review-list"></div>
-    <div class="review-footer">
-      <button class="btn" id="review-continue-btn">SEE MY RESULT</button>
+  <!-- ================= LEVEL MAP SCREEN ================= -->
+  <section class="screen" id="screen-map">
+    <div class="card">
+      <h2 style="font-size:20px; margin-bottom:4px;">Your Journey</h2>
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="map-progress-label">LEVEL 1 OF 5</span>
+          <span id="map-progress-count">0 / 5 cleared</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="map-progress-fill"></div></div>
+      </div>
+      <div class="level-list" id="map-list"></div>
     </div>
-  </div>
+  </section>
 
-  <!-- RESULT SCREEN -->
-  <div class="screen" id="screen-result">
+  <!-- ================= QUIZ SCREEN ================= -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-header">
+      <div class="quiz-header-left">
+        <div class="quiz-level-name" id="quiz-level-name">LEVEL</div>
+        <div class="quiz-qnum" id="quiz-question-number">QUESTION 1 OF 30</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-pill" id="quiz-timer-pill">
+        <div class="label">TIME LEFT</div>
+        <div class="value" id="quiz-timer">00:00</div>
+      </div>
+      <div class="stat-pill">
+        <div class="label">SCORE</div>
+        <div class="value" id="quiz-score">0</div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-text" id="quiz-question-text">Loading…</div>
+    </div>
+
+    <div class="answer-form">
+      <label for="quiz-answer-input" style="font-size:12.5px; color:var(--ink-soft); text-align:center; font-weight:600;">Type your answer</label>
+      <input type="text" id="quiz-answer-input" class="answer-input" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Your answer" aria-label="Your answer">
+      <div class="feedback-msg" id="quiz-feedback" aria-live="polite"></div>
+      <button class="btn btn-primary" id="quiz-submit-btn" type="button">SUBMIT</button>
+    </div>
+
+    <button class="quiz-quit" id="quiz-quit-btn" type="button">Quit to level map</button>
+  </section>
+
+  <!-- ================= RESULT SCREEN ================= -->
+  <section class="screen" id="screen-result">
     <div class="card result-card">
-      <div class="result-status" id="result-status">LEVEL CLEARED ✓</div>
-      <div class="result-score celebrate" id="result-score">24 / 30</div>
+      <div class="result-status" id="result-status">LEVEL CLEARED ✅</div>
+      <div class="result-sub" id="result-sub">Nicely done.</div>
+
+      <div class="score-big" id="result-score-big">24 / 30</div>
+      <div class="score-pct" id="result-pct">80%</div>
+
       <div class="result-meta">
-        <div><div class="m-label">ACCURACY</div><div class="m-value" id="result-accuracy">80%</div></div>
-        <div><div class="m-label">TIME USED</div><div class="m-value" id="result-time">03:41</div></div>
+        <div class="stat-pill">
+          <div class="label">TIME USED</div>
+          <div class="value" id="result-time">00:00</div>
+        </div>
+        <div class="stat-pill">
+          <div class="label">LEVEL</div>
+          <div class="value" id="result-level-name" style="font-size:13px;">—</div>
+        </div>
       </div>
-      <div id="result-fail-block" style="display:none;">
-        <p class="fail-note" id="result-fail-note">You needed 20. Don't worry — you get another chance.</p>
-      </div>
-      <div class="tease-note" id="tease-note">ARYAN'S SCORE = 0 FOR LEVEL 1</div>
-      <div style="width:100%; display:flex; flex-direction:column; gap:10px; margin-top:6px;">
-        <button class="btn" id="result-primary-btn">CONTINUE</button>
-        <button class="btn btn-ghost" id="result-map-btn">BACK TO JOURNEY</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- REWARD REVEAL -->
-  <div class="screen" id="screen-reward">
-    <div class="card reward-box">
-      <div class="reward-pre">YOU CLEARED THE LEVEL!</div>
-      <div class="reward-gift celebrate" id="reward-gift">🎁</div>
-      <div class="reward-pre">YOUR SURPRISE REWARD IS...</div>
-      <div class="reward-emoji-big celebrate" id="reward-emoji-big" style="display:none;">🍫</div>
-      <div class="reward-name-big" id="reward-name-big" style="display:none;">CHOCOLATE</div>
-      <div class="reward-unlocked-tag" id="reward-unlocked-tag" style="display:none;">REWARD UNLOCKED ✓</div>
-      <div style="width:100%; margin-top:14px;">
-        <button class="btn" id="reward-continue-btn" style="display:none;">CONTINUE</button>
-      </div>
-    </div>
-  </div>
+      <div class="result-actions" id="result-actions"></div>
 
-  <!-- FINAL VICTORY -->
-  <div class="screen" id="screen-victory">
-    <div class="card">
-      <div class="center-text" style="font-size:32px;">🌻</div>
-      <div class="victory-title center-text">FINAL BOSS DEFEATED 👑</div>
-      <p class="center-text" style="margin-top:6px; font-weight:800; color:var(--accent-dark);">YOU SURVIVED ALL 5 LEVELS</p>
-      <p class="center-text" style="margin-top:4px; font-size:13px; color:var(--text-soft); line-height:1.5;">150 questions.<br>5 levels.<br>1 very questionable reward.</p>
-      <div style="margin-top:16px;" id="victory-summary"></div>
-      <div class="grand-reward">
-        <div class="center-text" style="font-size:11px; font-weight:800; color:var(--accent-dark); letter-spacing:0.5px;">YOUR GRAND REWARD</div>
-        <div class="center-text g-emoji">🧹</div>
-        <div class="center-text g-title">ARYAN KA ROOM<br>SAAF KARWANA 🥹</div>
+      <div class="review-toggle">
+        <button class="btn btn-ghost" id="review-toggle-btn" type="button">Show question review ▾</button>
       </div>
-      <p class="final-note">Mission unlocked.<br>No refunds. No appeals. No revaluation.</p>
-      <div style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
-        <button class="btn" id="victory-scorecard-btn">VIEW SCREENSHOT SCORE CARD</button>
-        <button class="btn btn-ghost" id="victory-map-btn">BACK TO JOURNEY</button>
-      </div>
+      <div class="review-list" id="result-review-list" style="display:none;"></div>
     </div>
-  </div>
+  </section>
 
-  <!-- SCORE CARD -->
-  <div class="screen" id="screen-scorecard">
-    <div class="card">
-      <div class="scorecard-brand">THE ULTIMATE TEST:<br>KRATIKA VS. SHAKUNTALA DEVI</div>
-      <div class="scorecard-title">FINAL RESULT</div>
-      <div id="scorecard-summary"></div>
-      <div class="stat-grid">
-        <div><div class="s-num" id="sc-levels-cleared">5/5</div><div class="s-label">LEVELS CLEARED</div></div>
-        <div><div class="s-num">150</div><div class="s-label">QUESTIONS</div></div>
-      </div>
-      <div class="final-status">FINAL BOSS DEFEATED 👑</div>
-      <div class="center-text" style="margin-top:16px; font-size:40px;">🧹</div>
-      <div class="center-text" style="font-weight:900; font-size:15px;">ARYAN KA ROOM<br>SAAF KARWANA 🥹</div>
-      <div style="margin-top:16px;">
-        <button class="btn btn-ghost" id="scorecard-back-btn">BACK</button>
-      </div>
+  <!-- ================= VICTORY SCREEN ================= -->
+  <section class="screen" id="screen-victory">
+    <div class="card victory-card">
+      <div class="victory-title">FINAL BOSS DEFEATED 👑</div>
+      <div class="victory-sub">Kratika has conquered every level.</div>
+
+      <div class="victory-total" id="victory-total">150</div>
+      <div class="victory-max">out of 150</div>
+
+      <div class="victory-breakdown" id="victory-breakdown"></div>
+
+      <div class="victory-reward-emoji">🧹</div>
+      <div class="victory-reward-text">ARYAN KA ROOM SAAF KARWANA 🥹</div>
+
+      <div class="victory-note">ARYAN IS SOMEWHERE CRYING. YOU JUST FOUGHT THE FINAL BOSS 👑</div>
+
+      <button class="btn btn-primary" id="victory-restart-btn" type="button">PLAY AGAIN FROM THE START</button>
     </div>
-  </div>
+  </section>
 
+</div>
+
+<!-- ================= REWARD OVERLAY ================= -->
+<div class="overlay" id="reward-overlay">
+  <div class="reward-card">
+    <div class="reward-emoji" id="reward-emoji">🎁</div>
+    <div class="reward-title">REWARD UNLOCKED</div>
+    <div class="reward-text" id="reward-text">???</div>
+    <div class="reward-note" id="reward-note">Aryan note goes here.</div>
+    <button class="btn btn-primary" id="reward-reveal-btn" type="button">TAP TO REVEAL 🎁</button>
+    <button class="btn btn-primary" id="reward-continue-btn" type="button" style="display:none;">CONTINUE</button>
+  </div>
 </div>
 
 <script>
 (function(){
   "use strict";
 
-  // ---------------- QUESTION DATA ----------------
-  var QUESTIONS = {"level1": [{"q": "17 × 9 = ?", "a": "153", "type": "int"}, {"q": "23 × 8 = ?", "a": "184", "type": "int"}, {"q": "19 × 7 = ?", "a": "133", "type": "int"}, {"q": "24 × 9 = ?", "a": "216", "type": "int"}, {"q": "16 × 8 = ?", "a": "128", "type": "int"}, {"q": "21 × 7 = ?", "a": "147", "type": "int"}, {"q": "25 × 9 = ?", "a": "225", "type": "int"}, {"q": "18 × 8 = ?", "a": "144", "type": "int"}, {"q": "22 × 7 = ?", "a": "154", "type": "int"}, {"q": "14 × 9 = ?", "a": "126", "type": "int"}, {"q": "23 × 6 = ?", "a": "138", "type": "int"}, {"q": "17 × 8 = ?", "a": "136", "type": "int"}, {"q": "24 × 7 = ?", "a": "168", "type": "int"}, {"q": "19 × 8 = ?", "a": "152", "type": "int"}, {"q": "21 × 9 = ?", "a": "189", "type": "int"}, {"q": "16 × 7 = ?", "a": "112", "type": "int"}, {"q": "25 × 8 = ?", "a": "200", "type": "int"}, {"q": "22 × 9 = ?", "a": "198", "type": "int"}, {"q": "18 × 7 = ?", "a": "126", "type": "int"}, {"q": "13 × 8 = ?", "a": "104", "type": "int"}, {"q": "24 × 6 = ?", "a": "144", "type": "int"}, {"q": "17 × 7 = ?", "a": "119", "type": "int"}, {"q": "23 × 9 = ?", "a": "207", "type": "int"}, {"q": "19 × 6 = ?", "a": "114", "type": "int"}, {"q": "21 × 8 = ?", "a": "168", "type": "int"}, {"q": "15 × 9 = ?", "a": "135", "type": "int"}, {"q": "25 × 7 = ?", "a": "175", "type": "int"}, {"q": "22 × 8 = ?", "a": "176", "type": "int"}, {"q": "16 × 9 = ?", "a": "144", "type": "int"}, {"q": "18 × 9 = ?", "a": "162", "type": "int"}], "level2": [{"q": "13² = ?", "a": "169", "type": "int"}, {"q": "14² = ?", "a": "196", "type": "int"}, {"q": "16² = ?", "a": "256", "type": "int"}, {"q": "17² = ?", "a": "289", "type": "int"}, {"q": "18² = ?", "a": "324", "type": "int"}, {"q": "19² = ?", "a": "361", "type": "int"}, {"q": "21² = ?", "a": "441", "type": "int"}, {"q": "22² = ?", "a": "484", "type": "int"}, {"q": "23² = ?", "a": "529", "type": "int"}, {"q": "24² = ?", "a": "576", "type": "int"}, {"q": "26² = ?", "a": "676", "type": "int"}, {"q": "27² = ?", "a": "729", "type": "int"}, {"q": "√225 = ?", "a": "15", "type": "int"}, {"q": "√289 = ?", "a": "17", "type": "int"}, {"q": "√361 = ?", "a": "19", "type": "int"}, {"q": "√441 = ?", "a": "21", "type": "int"}, {"q": "√529 = ?", "a": "23", "type": "int"}, {"q": "√576 = ?", "a": "24", "type": "int"}, {"q": "√676 = ?", "a": "26", "type": "int"}, {"q": "√784 = ?", "a": "28", "type": "int"}, {"q": "Which number squared gives 400?", "a": "20", "type": "int"}, {"q": "Which number squared gives 625?", "a": "25", "type": "int"}, {"q": "Which number squared gives 729?", "a": "27", "type": "int"}, {"q": "Which number squared gives 841?", "a": "29", "type": "int"}, {"q": "Which number squared gives 961?", "a": "31", "type": "int"}, {"q": "25² − 18² = ?", "a": "301", "type": "int"}, {"q": "30² − 22² = ?", "a": "416", "type": "int"}, {"q": "19² − 11² = ?", "a": "240", "type": "int"}, {"q": "27² − 14² = ?", "a": "533", "type": "int"}, {"q": "23² − 16² = ?", "a": "273", "type": "int"}], "level3": [{"q": "4³ = ?", "a": "64", "type": "int"}, {"q": "5³ = ?", "a": "125", "type": "int"}, {"q": "6³ = ?", "a": "216", "type": "int"}, {"q": "7³ = ?", "a": "343", "type": "int"}, {"q": "8³ = ?", "a": "512", "type": "int"}, {"q": "9³ = ?", "a": "729", "type": "int"}, {"q": "11³ = ?", "a": "1331", "type": "int"}, {"q": "12³ = ?", "a": "1728", "type": "int"}, {"q": "13³ = ?", "a": "2197", "type": "int"}, {"q": "14³ = ?", "a": "2744", "type": "int"}, {"q": "16³ = ?", "a": "4096", "type": "int"}, {"q": "18³ = ?", "a": "5832", "type": "int"}, {"q": "∛27 = ?", "a": "3", "type": "int"}, {"q": "∛216 = ?", "a": "6", "type": "int"}, {"q": "∛343 = ?", "a": "7", "type": "int"}, {"q": "∛729 = ?", "a": "9", "type": "int"}, {"q": "∛1000 = ?", "a": "10", "type": "int"}, {"q": "∛1728 = ?", "a": "12", "type": "int"}, {"q": "∛3375 = ?", "a": "15", "type": "int"}, {"q": "∛4913 = ?", "a": "17", "type": "int"}, {"q": "Which number has cube 512?", "a": "8", "type": "int"}, {"q": "Which number has cube 1331?", "a": "11", "type": "int"}, {"q": "Which number has cube 2197?", "a": "13", "type": "int"}, {"q": "Which number has cube 4096?", "a": "16", "type": "int"}, {"q": "Which number has cube 6859?", "a": "19", "type": "int"}, {"q": "15³ − 10³ = ?", "a": "2375", "type": "int"}, {"q": "12³ + 8³ = ?", "a": "2240", "type": "int"}, {"q": "9³ + 6³ = ?", "a": "945", "type": "int"}, {"q": "14³ − 9³ = ?", "a": "2015", "type": "int"}, {"q": "10³ + 7³ = ?", "a": "1343", "type": "int"}], "level4": [{"q": "Convert 1/7 to a percentage (round to 2 decimal places).", "a": "14.29", "type": "percent"}, {"q": "What percentage is 5/9? (2 decimal places)", "a": "55.56", "type": "percent"}, {"q": "Express 7/12 as a percentage, rounded to 2 decimal places.", "a": "58.33", "type": "percent"}, {"q": "Convert 11/16 to a percentage (round to 2 decimal places).", "a": "68.75", "type": "percent"}, {"q": "What percentage is 1/18? (2 decimal places)", "a": "5.56", "type": "percent"}, {"q": "Express 2/7 as a percentage, rounded to 2 decimal places.", "a": "28.57", "type": "percent"}, {"q": "Convert 1/8 to a percentage (round to 2 decimal places).", "a": "12.50", "type": "percent"}, {"q": "What percentage is 1/9? (2 decimal places)", "a": "11.11", "type": "percent"}, {"q": "Express 1/6 as a percentage, rounded to 2 decimal places.", "a": "16.67", "type": "percent"}, {"q": "Convert 5/6 to a percentage (round to 2 decimal places).", "a": "83.33", "type": "percent"}, {"q": "What percentage is 3/7? (2 decimal places)", "a": "42.86", "type": "percent"}, {"q": "Express 4/9 as a percentage, rounded to 2 decimal places.", "a": "44.44", "type": "percent"}, {"q": "Convert 5/12 to a percentage (round to 2 decimal places).", "a": "41.67", "type": "percent"}, {"q": "What percentage is 7/16? (2 decimal places)", "a": "43.75", "type": "percent"}, {"q": "Express 1/3 as a percentage, rounded to 2 decimal places.", "a": "33.33", "type": "percent"}, {"q": "Convert 2/3 to a percentage (round to 2 decimal places).", "a": "66.67", "type": "percent"}, {"q": "What percentage is 1/4? (2 decimal places)", "a": "25.00", "type": "percent"}, {"q": "Express 3/4 as a percentage, rounded to 2 decimal places.", "a": "75.00", "type": "percent"}, {"q": "Convert 1/16 to a percentage (round to 2 decimal places).", "a": "6.25", "type": "percent"}, {"q": "What percentage is 3/16? (2 decimal places)", "a": "18.75", "type": "percent"}, {"q": "Express 5/7 as a percentage, rounded to 2 decimal places.", "a": "71.43", "type": "percent"}, {"q": "Convert 4/7 to a percentage (round to 2 decimal places).", "a": "57.14", "type": "percent"}, {"q": "What percentage is 1/12? (2 decimal places)", "a": "8.33", "type": "percent"}, {"q": "Express 7/9 as a percentage, rounded to 2 decimal places.", "a": "77.78", "type": "percent"}, {"q": "Convert 2/9 to a percentage (round to 2 decimal places).", "a": "22.22", "type": "percent"}, {"q": "What percentage is 9/16? (2 decimal places)", "a": "56.25", "type": "percent"}, {"q": "Express 1/17 as a percentage, rounded to 2 decimal places.", "a": "5.88", "type": "percent"}, {"q": "Convert 5/18 to a percentage (round to 2 decimal places).", "a": "27.78", "type": "percent"}, {"q": "What percentage is 1/19? (2 decimal places)", "a": "5.26", "type": "percent"}, {"q": "Express 1/11 as a percentage, rounded to 2 decimal places.", "a": "9.09", "type": "percent"}], "level5": [{"q": "23 × 7 = ?", "a": "161", "type": "int"}, {"q": "18 × 9 = ?", "a": "162", "type": "int"}, {"q": "25 × 6 = ?", "a": "150", "type": "int"}, {"q": "17 × 8 = ?", "a": "136", "type": "int"}, {"q": "22 × 7 = ?", "a": "154", "type": "int"}, {"q": "19 × 9 = ?", "a": "171", "type": "int"}, {"q": "24 × 8 = ?", "a": "192", "type": "int"}, {"q": "16 × 7 = ?", "a": "112", "type": "int"}, {"q": "27² = ?", "a": "729", "type": "int"}, {"q": "32² = ?", "a": "1024", "type": "int"}, {"q": "36² = ?", "a": "1296", "type": "int"}, {"q": "√1225 = ?", "a": "35", "type": "int"}, {"q": "√1444 = ?", "a": "38", "type": "int"}, {"q": "12³ = ?", "a": "1728", "type": "int"}, {"q": "15³ = ?", "a": "3375", "type": "int"}, {"q": "17³ = ?", "a": "4913", "type": "int"}, {"q": "∛5832 = ?", "a": "18", "type": "int"}, {"q": "∛8000 = ?", "a": "20", "type": "int"}, {"q": "3/8 as a percentage (2 decimal places)", "a": "37.50", "type": "percent"}, {"q": "5/12 as a percentage (2 decimal places)", "a": "41.67", "type": "percent"}, {"q": "7/15 as a percentage (2 decimal places)", "a": "46.67", "type": "percent"}, {"q": "11/16 as a percentage (2 decimal places)", "a": "68.75", "type": "percent"}, {"q": "5/9 as a percentage (2 decimal places)", "a": "55.56", "type": "percent"}, {"q": "7/13 as a percentage (2 decimal places)", "a": "53.85", "type": "percent"}, {"q": "27² + 18² = ?", "a": "1053", "type": "int"}, {"q": "35² − 24² = ?", "a": "649", "type": "int"}, {"q": "(23 × 9) − 18² = ?", "a": "-117", "type": "int"}, {"q": "(16³ ÷ 8³) + 27 = ?", "a": "35", "type": "int"}, {"q": "32² − 15³ ÷ 5 = ?", "a": "349", "type": "int"}, {"q": "(24 × 8) + 18² − 10³ ÷ 8 = ?", "a": "391", "type": "int"}]};
+  /* =========================================================
+     CONSTANTS
+  ========================================================= */
+
+  var LEVEL_TIMES = [180, 240, 240, 180, 300];
+  var PASS_SCORE = 20;
+  var QUESTIONS_PER_LEVEL = 30;
 
   var LEVEL_META = [
-    { key:"level1", title:"TABLE TROUBLE", rewardEmoji:"🍫", rewardName:"CHOCOLATE" },
-    { key:"level2", title:"SQUARE HUNT", rewardEmoji:"🍦", rewardName:"ICE CREAM" },
-    { key:"level3", title:"CUBE CHAMBER", rewardEmoji:"🍰", rewardName:"TRUFFLE PASTRY" },
-    { key:"level4", title:"PERCENTAGE PANIC", rewardEmoji:"🥞", rewardName:"DOSA" },
-    { key:"level5", title:"THE FINAL BOSS", rewardEmoji:"🧹", rewardName:"ARYAN KA ROOM SAAF KARWANA" }
+    { name:"TABLE TROUBLE",     short:"Multiplication tables from 13 to 25, tested at speed.", rewardEmoji:"🍫", rewardText:"🍫 CHOCOLATE", note:"ARYAN'S SCORE = 0 FOR LEVEL 1" },
+    { name:"SQUARE HUNT",       short:"Squares and square roots, from 1 through 30.",           rewardEmoji:"🍦", rewardText:"🍦 ICE CREAM", note:"ARYAN COULDN'T EVEN CLEAR THE 1ST LEVEL 😭" },
+    { name:"CUBE CHAMBER",      short:"Cubes and cube roots, from 1 through 20.",                rewardEmoji:"🍰", rewardText:"🍰 TRUFFLE PASTRY", note:"ARYAN IS STILL STUCK ON LEVEL 1. YOU'RE THREE LEVELS AHEAD 🏆" },
+    { name:"PERCENTAGE PANIC",  short:"Turn tricky fractions into clean percentages.",           rewardEmoji:"🥞", rewardText:"🥞 DOSA", note:"AT THIS POINT ARYAN HAS QUIETLY GIVEN UP. YOU'RE ON LEVEL 4 😌" },
+    { name:"THE FINAL BOSS",    short:"Everything at once. Tables, squares, cubes, percentages.", rewardEmoji:"🧹", rewardText:"🧹 ARYAN KA ROOM SAAF KARWANA 🥹", note:"ARYAN IS SOMEWHERE CRYING. YOU JUST FOUGHT THE FINAL BOSS 👑" }
   ];
 
-  var TEASE_NOTES = [
-    "ARYAN'S SCORE = 0 FOR LEVEL 1",
-    "ARYAN COULDN'T EVEN CLEAR THE 1ST LEVEL 😭",
-    "ARYAN IS STILL STUCK ON LEVEL 1. YOU'RE THREE LEVELS AHEAD 🏆",
-    "AT THIS POINT ARYAN HAS QUIETLY GIVEN UP. YOU'RE ON LEVEL 4 😌",
-    "ARYAN IS SOMEWHERE CRYING. YOU JUST FOUGHT THE FINAL BOSS 👑"
+  /* ---------- Level 1: Tables (exact, given) ---------- */
+  var LEVEL1_Q = ["17 × 9 = ?","23 × 8 = ?","19 × 7 = ?","24 × 9 = ?","16 × 8 = ?","21 × 7 = ?","25 × 9 = ?","18 × 8 = ?","22 × 7 = ?","14 × 9 = ?","23 × 6 = ?","17 × 8 = ?","24 × 7 = ?","19 × 8 = ?","21 × 9 = ?","16 × 7 = ?","25 × 8 = ?","22 × 9 = ?","18 × 7 = ?","13 × 8 = ?","24 × 6 = ?","17 × 7 = ?","23 × 9 = ?","19 × 6 = ?","21 × 8 = ?","15 × 9 = ?","25 × 7 = ?","22 × 8 = ?","16 × 9 = ?","18 × 9 = ?"];
+  var LEVEL1_A = [153,184,133,216,128,147,225,144,154,126,138,136,168,152,189,112,200,198,126,104,144,119,207,114,168,135,175,176,144,162];
+  var LEVEL1 = LEVEL1_Q.map(function(q,i){ return { q:q, a:LEVEL1_A[i] }; });
+
+  /* ---------- Level 2: Squares (1-30 range) ---------- */
+  var LEVEL2 = [
+    {q:"11² = ?", a:121}, {q:"12² = ?", a:144}, {q:"13² = ?", a:169}, {q:"14² = ?", a:196},
+    {q:"16² = ?", a:256}, {q:"17² = ?", a:289}, {q:"18² = ?", a:324}, {q:"19² = ?", a:361},
+    {q:"21² = ?", a:441}, {q:"22² = ?", a:484}, {q:"23² = ?", a:529}, {q:"24² = ?", a:576},
+    {q:"26² = ?", a:676}, {q:"27² = ?", a:729}, {q:"29² = ?", a:841},
+    {q:"√100 = ?", a:10}, {q:"√144 = ?", a:12}, {q:"√169 = ?", a:13}, {q:"√196 = ?", a:14},
+    {q:"√225 = ?", a:15}, {q:"√256 = ?", a:16}, {q:"√289 = ?", a:17}, {q:"√324 = ?", a:18},
+    {q:"√361 = ?", a:19}, {q:"√400 = ?", a:20}, {q:"√441 = ?", a:21}, {q:"√484 = ?", a:22},
+    {q:"√529 = ?", a:23}, {q:"√576 = ?", a:24}, {q:"√625 = ?", a:25}
   ];
 
-  var PASS_SCORE = 20;
-  var LEVEL_TIMES = [180, 240, 240, 180, 300]; // seconds
+  /* ---------- Level 3: Cubes (1-20 range) ---------- */
+  var LEVEL3 = [
+    {q:"6³ = ?", a:216}, {q:"7³ = ?", a:343}, {q:"8³ = ?", a:512}, {q:"9³ = ?", a:729},
+    {q:"10³ = ?", a:1000}, {q:"11³ = ?", a:1331}, {q:"12³ = ?", a:1728}, {q:"13³ = ?", a:2197},
+    {q:"14³ = ?", a:2744}, {q:"15³ = ?", a:3375}, {q:"16³ = ?", a:4096}, {q:"17³ = ?", a:4913},
+    {q:"18³ = ?", a:5832}, {q:"19³ = ?", a:6859}, {q:"20³ = ?", a:8000},
+    {q:"∛64 = ?", a:4}, {q:"∛125 = ?", a:5}, {q:"∛216 = ?", a:6}, {q:"∛343 = ?", a:7},
+    {q:"∛512 = ?", a:8}, {q:"∛729 = ?", a:9}, {q:"∛1000 = ?", a:10}, {q:"∛1331 = ?", a:11},
+    {q:"∛1728 = ?", a:12}, {q:"∛2197 = ?", a:13}, {q:"∛2744 = ?", a:14}, {q:"∛3375 = ?", a:15},
+    {q:"∛4096 = ?", a:16}, {q:"∛4913 = ?", a:17}, {q:"∛5832 = ?", a:18}
+  ];
 
-  // ---------------- STATE ----------------
+  /* ---------- Level 4: Fractions to Percentages ---------- */
+  var LEVEL4 = [
+    {q:"1/2 as a percentage, to 2 decimal places.", a:50.00, pct:true},
+    {q:"1/3 as a percentage, to 2 decimal places.", a:33.33, pct:true},
+    {q:"1/4 as a percentage, to 2 decimal places.", a:25.00, pct:true},
+    {q:"1/5 as a percentage, to 2 decimal places.", a:20.00, pct:true},
+    {q:"7/8 as a percentage, to 2 decimal places.", a:87.50, pct:true},
+    {q:"2/9 as a percentage, to 2 decimal places.", a:22.22, pct:true},
+    {q:"1/6 as a percentage, to 2 decimal places.", a:16.67, pct:true},
+    {q:"1/7 as a percentage, to 2 decimal places.", a:14.29, pct:true},
+    {q:"1/8 as a percentage, to 2 decimal places.", a:12.50, pct:true},
+    {q:"1/9 as a percentage, to 2 decimal places.", a:11.11, pct:true},
+    {q:"1/10 as a percentage, to 2 decimal places.", a:10.00, pct:true},
+    {q:"2/7 as a percentage, to 2 decimal places.", a:28.57, pct:true},
+    {q:"1/11 as a percentage, to 2 decimal places.", a:9.09, pct:true},
+    {q:"1/12 as a percentage, to 2 decimal places.", a:8.33, pct:true},
+    {q:"1/13 as a percentage, to 2 decimal places.", a:7.69, pct:true},
+    {q:"1/14 as a percentage, to 2 decimal places.", a:7.14, pct:true},
+    {q:"1/15 as a percentage, to 2 decimal places.", a:6.67, pct:true},
+    {q:"4/7 as a percentage, to 2 decimal places.", a:57.14, pct:true},
+    {q:"1/16 as a percentage, to 2 decimal places.", a:6.25, pct:true},
+    {q:"1/17 as a percentage, to 2 decimal places.", a:5.88, pct:true},
+    {q:"1/18 as a percentage, to 2 decimal places.", a:5.56, pct:true},
+    {q:"1/19 as a percentage, to 2 decimal places.", a:5.26, pct:true},
+    {q:"1/20 as a percentage, to 2 decimal places.", a:5.00, pct:true},
+    {q:"2/3 as a percentage, to 2 decimal places.", a:66.67, pct:true},
+    {q:"2/4 as a percentage, to 2 decimal places.", a:50.00, pct:true},
+    {q:"2/6 as a percentage, to 2 decimal places.", a:33.33, pct:true},
+    {q:"3/4 as a percentage, to 2 decimal places.", a:75.00, pct:true},
+    {q:"14/16 as a percentage, to 2 decimal places.", a:87.50, pct:true},
+    {q:"4/9 as a percentage, to 2 decimal places.", a:44.44, pct:true},
+    {q:"4/6 as a percentage, to 2 decimal places.", a:66.67, pct:true}
+  ];
+
+  /* ---------- Level 5: Final Boss (exact, given) ---------- */
+  var LEVEL5 = [
+    {q:"23 × 7 = ?", a:161},
+    {q:"18 × 9 = ?", a:162},
+    {q:"25 × 6 = ?", a:150},
+    {q:"17 × 8 = ?", a:136},
+    {q:"22 × 7 = ?", a:154},
+    {q:"19 × 9 = ?", a:171},
+    {q:"24 × 8 = ?", a:192},
+    {q:"16 × 7 = ?", a:112},
+    {q:"27² = ?", a:729},
+    {q:"32² = ?", a:1024},
+    {q:"36² = ?", a:1296},
+    {q:"√1225 = ?", a:35},
+    {q:"√1444 = ?", a:38},
+    {q:"12³ = ?", a:1728},
+    {q:"15³ = ?", a:3375},
+    {q:"17³ = ?", a:4913},
+    {q:"∛5832 = ?", a:18},
+    {q:"∛8000 = ?", a:20},
+    {q:"3/8 as a percentage, to 2 decimal places.", a:37.50, pct:true},
+    {q:"5/12 as a percentage, to 2 decimal places.", a:41.67, pct:true},
+    {q:"7/15 as a percentage, to 2 decimal places.", a:46.67, pct:true},
+    {q:"11/16 as a percentage, to 2 decimal places.", a:68.75, pct:true},
+    {q:"5/9 as a percentage, to 2 decimal places.", a:55.56, pct:true},
+    {q:"7/13 as a percentage, to 2 decimal places.", a:53.85, pct:true},
+    {q:"27² + 18² = ?", a:1053},
+    {q:"35² − 24² = ?", a:649},
+    {q:"(23 × 9) − 18² = ?", a:-117},
+    {q:"(16³ ÷ 8³) + 27 = ?", a:35},
+    {q:"32² − 15³ ÷ 5 = ?", a:349},
+    {q:"(24 × 8) + 18² − 10³ ÷ 8 = ?", a:391}
+  ];
+
+  var QUESTIONS = [LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5];
+
+  /* =========================================================
+     STATE
+  ========================================================= */
+
   var state = {
-    levels: LEVEL_META.map(function(m, i){
-      return { unlocked: i === 0, completed: false, bestScore: null };
-    }),
-    currentLevelIdx: null,
-    questions: [],
-    qIndex: 0,
+    currentLevel: -1,
+    currentQuestionIndex: 0,
     score: 0,
-    answered: false,
-    timeLeft: LEVEL_TIME,
-    timeUsed: 0,
+    timeLeft: 0,
     timerId: null,
-    attemptLog: [], // {q, given, correct, isCorrect}
-    lastResult: null
+    advanceTimeoutId: null,
+    shuffledQuestions: [],
+    review: [],
+    answered: false,
+    finished: false,
+    completedLevels: [false,false,false,false,false],
+    unlockedLevels: [true,false,false,false,false],
+    bestScores: [0,0,0,0,0],
+    lastResultLevel: -1,
+    lastTimeUsed: 0,
+    lastScore: 0
   };
 
-  // ---------------- HELPERS ----------------
+  /* =========================================================
+     HELPERS
+  ========================================================= */
+
   function $(id){ return document.getElementById(id); }
-  function show(screenId){
-    var all = document.querySelectorAll(".screen");
-    for (var i=0;i<all.length;i++){ all[i].classList.remove("active"); }
-    $(screenId).classList.add("active");
-    window.scrollTo(0,0);
-  }
+
   function shuffle(arr){
     var a = arr.slice();
-    for (var i=a.length-1;i>0;i--){
-      var j = Math.floor(Math.random()*(i+1));
-      var tmp = a[i]; a[i]=a[j]; a[j]=tmp;
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i+1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
     }
     return a;
   }
-  function fmtTime(sec){
-    sec = Math.max(0, Math.floor(sec));
-    var m = Math.floor(sec/60);
-    var s = sec%60;
-    return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+
+  function showScreen(id){
+    var screens = document.querySelectorAll('.screen');
+    for(var i=0;i<screens.length;i++){ screens[i].classList.remove('active'); }
+    $(id).classList.add('active');
+    window.scrollTo(0,0);
   }
-  function classify(score){
-    if (score <= 19) return { label:"Lets try again champ! 💪", passed:false };
-    if (score <= 23) return { label:"LEVEL CLEARED ✅", passed:true };
-    if (score <= 26) return { label:"GOOD JOB ⭐", passed:true };
-    if (score <= 29) return { label:"EXCELLENT 🔥", passed:true };
-    return { label:"PERFECT SCORE 👑", passed:true };
+
+  function pad2(n){ return (n < 10 ? "0" : "") + n; }
+
+  function formatTime(sec){
+    if(sec < 0) sec = 0;
+    var m = Math.floor(sec / 60);
+    var s = sec % 60;
+    return pad2(m) + ":" + pad2(s);
   }
-  function checkAnswer(q, raw){
-    var val = String(raw == null ? "" : raw).trim();
-    if (val === "") return false;
-    if (q.type === "int"){
-      var cleaned = val.replace(/\s+/g,"");
-      if (!/^-?\d+$/.test(cleaned)) return false;
-      return parseInt(cleaned,10) === parseInt(q.a,10);
-    } else if (q.type === "percent"){
-      var cleaned2 = val.replace(/\s+/g,"").replace(/%$/,"");
-      if (!/^-?\d+(\.\d+)?$/.test(cleaned2)) return false;
-      var num = parseFloat(cleaned2);
-      var expected = parseFloat(q.a);
-      return Math.abs(num - expected) < 0.005;
+
+  function round2(x){ return Math.round(x * 100); }
+
+  function formatAnswer(q){
+    if(q.pct){ return q.a.toFixed(2); }
+    return String(q.a);
+  }
+
+  function checkAnswer(userInputRaw, q){
+    if(userInputRaw === null || userInputRaw === undefined) return false;
+    var trimmed = String(userInputRaw).trim();
+    if(trimmed === "") return false;
+    var userNum = parseFloat(trimmed);
+    if(isNaN(userNum)) return false;
+    return round2(userNum) === round2(q.a);
+  }
+
+  /* =========================================================
+     LEVEL MAP RENDERING
+  ========================================================= */
+
+  function currentAvailableLevelIndex(){
+    for(var i=0;i<5;i++){
+      if(!state.completedLevels[i]) return i;
     }
-    return false;
-  }
-  function displayAnswer(q){
-    return q.type === "percent" ? (q.a + "%") : q.a;
+    return 4;
   }
 
-  // ---------------- INSTRUCTIONS -> MAP ----------------
-  $("btn-begin").addEventListener("click", function(){
-    renderMap();
-    show("screen-map");
-  });
-
-  // ---------------- LEVEL MAP ----------------
   function renderMap(){
-    var completedCount = state.levels.filter(function(l){return l.completed;}).length;
-    var currentDisplay = Math.min(completedCount+1, 5);
-    $("map-progress-label").textContent = "LEVEL " + currentDisplay + " OF 5";
-    $("map-progress-fill").style.width = (completedCount/5*100) + "%";
+    var clearedCount = state.completedLevels.filter(Boolean).length;
+    var availableIdx = currentAvailableLevelIndex();
 
-    var list = $("map-list");
+    $('map-progress-label').textContent = "LEVEL " + (availableIdx+1) + " OF 5";
+    $('map-progress-count').textContent = clearedCount + " / 5 cleared";
+    $('map-progress-fill').style.width = Math.round((clearedCount/5)*100) + "%";
+
+    var list = $('map-list');
     list.innerHTML = "";
-    for (var i=0;i<5;i++){
-      var meta = LEVEL_META[i];
-      var lvl = state.levels[i];
-      var node = document.createElement("div");
-      node.className = "level-node" + (lvl.unlocked ? "" : " locked");
 
-      var emoji, rewardLine, statusHtml;
-      if (lvl.completed){
-        emoji = meta.rewardEmoji;
-        rewardLine = meta.rewardName;
-        statusHtml = '<span class="lvl-status status-cleared">✓ CLEARED</span>';
-      } else {
-        emoji = "🎁";
-        rewardLine = "SURPRISE REWARD";
-        statusHtml = lvl.unlocked
-          ? '<span class="lvl-status status-available">AVAILABLE</span>'
-          : '<span class="lvl-status status-locked">LOCKED</span>';
+    for(var i=0;i<5;i++){
+      var meta = LEVEL_META[i];
+      var locked = !state.unlockedLevels[i];
+      var completed = state.completedLevels[i];
+      var isCurrent = (i === availableIdx) && !locked;
+
+      var card = document.createElement('button');
+      card.type = "button";
+      card.className = "level-card" + (locked ? " locked" : "") + (completed ? " completed" : "") + (isCurrent ? " current" : "");
+      card.setAttribute('aria-label', "Level " + (i+1) + ": " + meta.name + (locked ? " (locked)" : ""));
+      if(locked){ card.disabled = true; }
+
+      var numDiv = document.createElement('div');
+      numDiv.className = "level-num";
+      numDiv.textContent = completed ? "✓" : String(i+1);
+      card.appendChild(numDiv);
+
+      var infoDiv = document.createElement('div');
+      infoDiv.className = "level-info";
+
+      var nameDiv = document.createElement('div');
+      nameDiv.className = "level-name";
+      nameDiv.textContent = "LEVEL " + (i+1) + ": " + meta.name;
+      infoDiv.appendChild(nameDiv);
+
+      var descDiv = document.createElement('div');
+      descDiv.className = "level-desc";
+      descDiv.textContent = meta.short;
+      infoDiv.appendChild(descDiv);
+
+      if(completed){
+        var statusTag = document.createElement('div');
+        statusTag.className = "level-status-tag";
+        statusTag.textContent = "CLEARED · BEST " + state.bestScores[i] + "/30";
+        infoDiv.appendChild(statusTag);
       }
 
-      node.innerHTML =
-        '<div class="lvl-emoji">'+emoji+'</div>'+
-        '<div class="lvl-info">'+
-          '<div class="lvl-title">'+(i+1)+'. '+meta.title+'</div>'+
-          '<div class="lvl-reward">'+rewardLine+'</div>'+
-        '</div>'+ statusHtml;
+      card.appendChild(infoDiv);
 
-      (function(idx, unlocked){
-        node.addEventListener("click", function(){
-          if (unlocked) startLevel(idx);
+      var rewardDiv = document.createElement('div');
+      rewardDiv.className = "level-reward";
+      if(locked){
+        rewardDiv.innerHTML = '<span class="lock-icon">🔒</span>';
+      } else if(completed){
+        rewardDiv.textContent = meta.rewardEmoji;
+      } else {
+        rewardDiv.textContent = "🎁";
+      }
+      card.appendChild(rewardDiv);
+
+      (function(idx, isLocked){
+        card.addEventListener('click', function(){
+          if(isLocked) return;
+          startLevel(idx);
         });
-      })(i, lvl.unlocked);
-      list.appendChild(node);
+      })(i, locked);
+
+      list.appendChild(card);
     }
   }
 
-  // ---------------- QUIZ FLOW ----------------
-  function startLevel(idx){
-    state.currentLevelIdx = idx;
-    state.questions = shuffle(QUESTIONS[LEVEL_META[idx].key]);
-    state.qIndex = 0;
-    state.score = 0;
-    state.answered = false;
-    state.timeLeft = (idx === 0 || idx === 3) ? 180 : (idx === 4 ? 300 : LEVEL_TIME);
-    state.attemptLog = [];
-    state.finished = false;
+  /* =========================================================
+     QUIZ FLOW
+  ========================================================= */
 
-    $("quiz-level-name").textContent = "LEVEL " + (idx+1) + " · " + LEVEL_META[idx].title;
-    show("screen-quiz");
+  function startLevel(idx){
+    clearTimersAndPending();
+    state.currentLevel = idx;
+    state.currentQuestionIndex = 0;
+    state.score = 0;
+    state.review = [];
+    state.answered = false;
+    state.finished = false;
+    state.shuffledQuestions = shuffle(QUESTIONS[idx]);
+    state.timeLeft = LEVEL_TIMES[idx];
+
+    $('quiz-level-name').textContent = "LEVEL " + (idx+1) + ": " + LEVEL_META[idx].name;
+    $('quiz-score').textContent = "0";
+
+    showScreen('screen-quiz');
     renderQuestion();
+    updateTimerDisplay();
     startTimer();
   }
 
+  function clearTimersAndPending(){
+    if(state.timerId){ clearInterval(state.timerId); state.timerId = null; }
+    if(state.advanceTimeoutId){ clearTimeout(state.advanceTimeoutId); state.advanceTimeoutId = null; }
+  }
+
   function startTimer(){
-    if (state.timerId) clearInterval(state.timerId);
-    updateTimerDisplay();
+    if(state.timerId){ clearInterval(state.timerId); }
     state.timerId = setInterval(function(){
-      state.timeLeft -= 1;
-      if (state.timeLeft <= 0){
+      state.timeLeft--;
+      if(state.timeLeft <= 0){
         state.timeLeft = 0;
         updateTimerDisplay();
         clearInterval(state.timerId);
@@ -536,240 +958,337 @@
   }
 
   function updateTimerDisplay(){
-    var el = $("quiz-timer");
-    el.textContent = fmtTime(state.timeLeft);
-    if (state.timeLeft <= 30){ el.classList.add("warn"); } else { el.classList.remove("warn"); }
+    var el = $('quiz-timer');
+    el.textContent = formatTime(state.timeLeft);
+    var pill = $('quiz-timer-pill');
+    if(state.timeLeft <= 20){ pill.classList.add('timer-low'); }
+    else{ pill.classList.remove('timer-low'); }
   }
 
   function renderQuestion(){
-    if (state.qIndex >= 30){
-      finishLevel();
-      return;
-    }
-    state.answered = false;
-    var q = state.questions[state.qIndex];
-    $("quiz-qcount").textContent = "Question " + (state.qIndex+1) + " / 30";
-    $("quiz-question").textContent = q.q;
-    var input = $("quiz-input");
+    var idx = state.currentQuestionIndex;
+    var total = QUESTIONS_PER_LEVEL;
+    var q = state.shuffledQuestions[idx];
+
+    $('quiz-question-number').textContent = "QUESTION " + (idx+1) + " OF " + total;
+    $('quiz-question-text').textContent = q.q;
+
+    var input = $('quiz-answer-input');
     input.value = "";
-    $("quiz-submit").disabled = false;
-    $("quiz-card").classList.remove("flash-correct","flash-wrong");
-    setTimeout(function(){ input.focus(); }, 30);
+    input.disabled = false;
+    input.classList.remove('correct','wrong');
+
+    var btn = $('quiz-submit-btn');
+    btn.disabled = false;
+    btn.textContent = "SUBMIT";
+
+    $('quiz-feedback').textContent = "";
+    $('quiz-feedback').className = "feedback-msg";
+
+    state.answered = false;
+
+    setTimeout(function(){ input.focus(); }, 50);
   }
 
   function submitCurrentAnswer(){
-    if (state.answered) return;
-    if (state.timeLeft <= 0) return;
+    if(state.finished) return;
+    if(state.answered) return;
+
+    var idx = state.currentQuestionIndex;
+    var q = state.shuffledQuestions[idx];
+    var input = $('quiz-answer-input');
+    var rawValue = input.value;
+    var trimmed = String(rawValue).trim();
+    var wasAnswered = trimmed !== "";
+    var isCorrect = wasAnswered ? checkAnswer(trimmed, q) : false;
+
     state.answered = true;
-    $("quiz-submit").disabled = true;
+    input.disabled = true;
+    $('quiz-submit-btn').disabled = true;
 
-    var q = state.questions[state.qIndex];
-    var raw = $("quiz-input").value;
-    var given = String(raw).trim();
-    var correct = checkAnswer(q, raw);
-
-    state.attemptLog.push({ q: q.q, given: given, correctAnswer: displayAnswer(q), isCorrect: correct });
-
-    if (correct){
-      state.score = Math.min(30, state.score + 1);
-      $("quiz-card").classList.add("flash-correct");
+    if(isCorrect){
+      state.score++;
+      input.classList.add('correct');
+      var fb1 = $('quiz-feedback');
+      fb1.textContent = "Correct! ✓";
+      fb1.className = "feedback-msg correct";
     } else {
-      $("quiz-card").classList.add("flash-wrong");
+      input.classList.add('wrong');
+      var fb2 = $('quiz-feedback');
+      fb2.textContent = wasAnswered ? ("Not quite. Answer: " + formatAnswer(q)) : ("Answer: " + formatAnswer(q));
+      fb2.className = "feedback-msg wrong";
     }
 
-    setTimeout(function(){
-      if (state.finished) return;
-      state.qIndex += 1;
-      if (state.qIndex >= 30 || state.timeLeft <= 0){
+    $('quiz-score').textContent = String(state.score);
+
+    state.review.push({
+      qNum: idx + 1,
+      question: q.q,
+      userAnswer: wasAnswered ? trimmed : null,
+      correctAnswer: formatAnswer(q),
+      isCorrect: isCorrect
+    });
+
+    state.advanceTimeoutId = setTimeout(function(){
+      state.advanceTimeoutId = null;
+      if(state.finished) return;
+      state.currentQuestionIndex++;
+      if(state.currentQuestionIndex >= QUESTIONS_PER_LEVEL){
         finishLevel();
       } else {
         renderQuestion();
       }
-    }, 320);
+    }, 800);
   }
-
-  $("quiz-submit").addEventListener("click", submitCurrentAnswer);
-  $("quiz-input").addEventListener("keydown", function(e){
-    if (e.key === "Enter"){ e.preventDefault(); submitCurrentAnswer(); }
-  });
 
   function finishLevel(){
-    if (state.finished) return;
+    if(state.finished) return;
     state.finished = true;
-    if (state.timerId){ clearInterval(state.timerId); state.timerId = null; }
-    // fill in unanswered remaining questions as blank/incorrect for the log
-    for (var i = state.attemptLog.length; i < 30; i++){
-      var q = state.questions[i];
-      state.attemptLog.push({ q: q.q, given: "", correctAnswer: displayAnswer(q), isCorrect: false });
+
+    clearTimersAndPending();
+
+    var idx = state.currentLevel;
+
+    // Ensure exactly 30 review entries: fill any remaining unanswered questions.
+    for(var i = state.review.length; i < QUESTIONS_PER_LEVEL; i++){
+      var q = state.shuffledQuestions[i];
+      state.review.push({
+        qNum: i + 1,
+        question: q.q,
+        userAnswer: null,
+        correctAnswer: formatAnswer(q),
+        isCorrect: false
+      });
     }
 
-    var idx = state.currentLevelIdx;
-    var score = Math.max(0, Math.min(30, state.score));
-    var result = classify(score);
-    var levelTime = (idx === 0 || idx === 3) ? 180 : (idx === 4 ? 300 : LEVEL_TIME);
-    state.timeUsed = levelTime - state.timeLeft;
-    state.lastResult = { score: score, timeUsed: state.timeUsed, passed: result.passed, label: result.label, levelIdx: idx };
+    var timeUsed = LEVEL_TIMES[idx] - state.timeLeft;
+    if(timeUsed < 0) timeUsed = 0;
 
-    if (result.passed){
-      state.levels[idx].completed = true;
-      state.levels[idx].bestScore = score;
-      if (idx+1 < 5) state.levels[idx+1].unlocked = true;
+    var passed = state.score >= PASS_SCORE;
+
+    if(state.score > state.bestScores[idx]){
+      state.bestScores[idx] = state.score;
     }
 
-    renderReview();
-    show("screen-review");
+    if(passed){
+      state.completedLevels[idx] = true;
+      if(idx + 1 < 5){ state.unlockedLevels[idx+1] = true; }
+    }
+
+    state.lastResultLevel = idx;
+    state.lastTimeUsed = timeUsed;
+    state.lastScore = state.score;
+
+    renderResult(passed, idx, state.score, timeUsed);
   }
 
-  // ---------------- REVIEW ----------------
-  function renderReview(){
-    var idx = state.currentLevelIdx;
-    $("review-sub").textContent = "LEVEL " + (idx+1) + " · " + LEVEL_META[idx].title;
-    var wrap = $("review-list");
-    wrap.innerHTML = "";
-    state.attemptLog.forEach(function(item, i){
-      var div = document.createElement("div");
-      div.className = "review-item " + (item.isCorrect ? "correct" : "wrong");
-      var yourAns = item.given === "" ? "(no answer)" : item.given;
-      var qEl = document.createElement("div");
-      qEl.className = "ri-q";
-      var mark = document.createElement("span");
-      mark.className = "ri-mark";
-      mark.textContent = item.isCorrect ? "✓" : "✗";
-      qEl.appendChild(mark);
-      qEl.appendChild(document.createTextNode("Question " + (i+1) + " • " + item.q));
-      var line = document.createElement("div");
-      line.className = "ri-line";
-      var your = document.createElement("span");
-      your.textContent = "Your answer: " + yourAns;
-      var correctEl = document.createElement("span");
-      correctEl.textContent = "Correct: " + item.correctAnswer;
-      line.appendChild(your);
-      line.appendChild(correctEl);
-      div.appendChild(qEl);
-      div.appendChild(line);
-      wrap.appendChild(div);
-    });
-  }
+  /* =========================================================
+     RESULT SCREEN
+  ========================================================= */
 
-  $("review-continue-btn").addEventListener("click", function(){
-    renderResult();
-    show("screen-result");
-  });
-
-  // ---------------- RESULT ----------------
-  function renderResult(){
-    var r = state.lastResult;
-    var idx = r.levelIdx;
-    var accuracy = Math.round((r.score/30)*100);
-
-    $("result-status").textContent = r.label;
-    $("result-score").textContent = r.score + " / 30";
-    $("result-accuracy").textContent = accuracy + "%";
-    $("result-time").textContent = fmtTime(r.timeUsed);
-    $("tease-note").textContent = TEASE_NOTES[idx];
-
-    var failBlock = $("result-fail-block");
-    if (r.passed){
-      failBlock.style.display = "none";
-      $("result-primary-btn").textContent = "CLAIM YOUR REWARD";
-    } else {
-      failBlock.style.display = "block";
-      $("result-fail-note").innerHTML = "SO CLOSE 😭<br><br>You needed 20.<br>You got " + r.score + ".<br><br>Don't worry.<br>You get another chance.";
-      $("result-primary-btn").textContent = "RETRY LEVEL";
-    }
-  }
-
-  $("result-primary-btn").addEventListener("click", function(){
-    var r = state.lastResult;
-    if (!r.passed){
-      startLevel(r.levelIdx);
-      return;
-    }
-    renderRewardReveal(r.levelIdx);
-    show("screen-reward");
-  });
-
-  $("result-map-btn").addEventListener("click", function(){
-    renderMap();
-    show("screen-map");
-  });
-
-  // ---------------- REWARD REVEAL ----------------
-  function renderRewardReveal(idx){
+  function renderResult(passed, idx, score, timeUsed){
     var meta = LEVEL_META[idx];
-    $("reward-gift").style.display = "block";
-    $("reward-emoji-big").style.display = "none";
-    $("reward-name-big").style.display = "none";
-    $("reward-unlocked-tag").style.display = "none";
-    $("reward-continue-btn").style.display = "none";
+    var pct = Math.round((score / QUESTIONS_PER_LEVEL) * 100);
 
-    setTimeout(function(){
-      $("reward-gift").style.display = "none";
-      $("reward-emoji-big").textContent = meta.rewardEmoji;
-      $("reward-emoji-big").style.display = "block";
-      $("reward-name-big").textContent = meta.rewardName;
-      $("reward-name-big").style.display = "block";
-      $("reward-unlocked-tag").style.display = "block";
-      $("reward-continue-btn").style.display = "inline-flex";
-      $("reward-continue-btn").textContent = (idx === 4) ? "SEE FINAL RESULT" : "CONTINUE";
-    }, 900);
-  }
-
-  $("reward-continue-btn").addEventListener("click", function(){
-    var idx = state.lastResult.levelIdx;
-    if (idx === 4){
-      renderVictory();
-      show("screen-victory");
+    var statusEl = $('result-status');
+    if(passed){
+      statusEl.textContent = "LEVEL CLEARED ✅";
+      statusEl.className = "result-status pass";
+      $('result-sub').textContent = "Beautifully calculated. On to the next challenge.";
     } else {
-      renderMap();
-      show("screen-map");
+      statusEl.textContent = "Lets try again champ! 💪";
+      statusEl.className = "result-status fail";
+      $('result-sub').textContent = "So close. Shuffle the questions and give it another shot.";
     }
-  });
 
-  // ---------------- FINAL VICTORY ----------------
-  function renderVictory(){
-    var wrap = $("victory-summary");
-    wrap.innerHTML = "";
-    for (var i=0;i<5;i++){
-      var row = document.createElement("div");
-      row.className = "summary-row";
-      var score = state.levels[i].bestScore != null ? state.levels[i].bestScore : 0;
-      row.innerHTML = "<span>Level "+(i+1)+": "+LEVEL_META[i].title+"</span><span>"+score+"/30 ✓</span>";
-      wrap.appendChild(row);
+    $('result-score-big').textContent = score + " / " + QUESTIONS_PER_LEVEL;
+    $('result-pct').textContent = pct + "%";
+    $('result-time').textContent = formatTime(timeUsed);
+    $('result-level-name').textContent = "LEVEL " + (idx+1) + ": " + meta.name;
+
+    // Actions
+    var actions = $('result-actions');
+    actions.innerHTML = "";
+
+    if(passed){
+      var revealBtn = document.createElement('button');
+      revealBtn.type = "button";
+      revealBtn.className = "btn btn-primary";
+      revealBtn.textContent = "REVEAL YOUR REWARD 🎁";
+      revealBtn.addEventListener('click', function(){ openRewardOverlay(idx); });
+      actions.appendChild(revealBtn);
+    } else {
+      var retryBtn = document.createElement('button');
+      retryBtn.type = "button";
+      retryBtn.className = "btn btn-primary";
+      retryBtn.textContent = "RETRY LEVEL";
+      retryBtn.addEventListener('click', function(){ startLevel(idx); });
+      actions.appendChild(retryBtn);
+
+      var mapBtn = document.createElement('button');
+      mapBtn.type = "button";
+      mapBtn.className = "btn btn-secondary";
+      mapBtn.textContent = "BACK TO LEVEL MAP";
+      mapBtn.addEventListener('click', function(){ renderMap(); showScreen('screen-map'); });
+      actions.appendChild(mapBtn);
     }
+
+    // Review list
+    var reviewList = $('result-review-list');
+    reviewList.innerHTML = "";
+    reviewList.style.display = "none";
+    $('review-toggle-btn').textContent = "Show question review ▾";
+
+    state.review.forEach(function(entry){
+      var item = document.createElement('div');
+      item.className = "review-item " + (entry.isCorrect ? "correct" : "wrong");
+
+      var header = document.createElement('div');
+      header.className = "rh";
+      header.textContent = (entry.isCorrect ? "✓" : "✗") + " Question " + entry.qNum;
+      item.appendChild(header);
+
+      var qText = document.createElement('div');
+      qText.className = "rq";
+      qText.textContent = entry.question;
+      item.appendChild(qText);
+
+      var aText = document.createElement('div');
+      aText.className = "ra";
+
+      var yourLine = document.createTextNode("Your answer: ");
+      aText.appendChild(yourLine);
+      var yourB = document.createElement('b');
+      yourB.textContent = entry.userAnswer === null ? "Not answered" : entry.userAnswer;
+      aText.appendChild(yourB);
+      aText.appendChild(document.createElement('br'));
+
+      var correctLine = document.createTextNode("Correct: ");
+      aText.appendChild(correctLine);
+      var correctB = document.createElement('b');
+      correctB.textContent = entry.correctAnswer;
+      aText.appendChild(correctB);
+
+      item.appendChild(aText);
+      reviewList.appendChild(item);
+    });
+
+    showScreen('screen-result');
   }
 
-  $("victory-map-btn").addEventListener("click", function(){
+  /* =========================================================
+     REWARD OVERLAY
+  ========================================================= */
+
+  function openRewardOverlay(idx){
+    var meta = LEVEL_META[idx];
+    var overlay = $('reward-overlay');
+    var emojiEl = $('reward-emoji');
+    var textEl = $('reward-text');
+    var noteEl = $('reward-note');
+    var revealBtn = $('reward-reveal-btn');
+    var continueBtn = $('reward-continue-btn');
+
+    emojiEl.textContent = "🎁";
+    emojiEl.classList.remove('bounce');
+    textEl.textContent = "???";
+    textEl.style.visibility = "hidden";
+    noteEl.style.visibility = "hidden";
+    revealBtn.style.display = "inline-flex";
+    continueBtn.style.display = "none";
+
+    overlay.classList.add('active');
+
+    revealBtn.onclick = function(){
+      emojiEl.textContent = meta.rewardEmoji;
+      emojiEl.classList.add('bounce');
+      textEl.textContent = meta.rewardText;
+      textEl.style.visibility = "visible";
+      noteEl.textContent = meta.note;
+      noteEl.style.visibility = "visible";
+      revealBtn.style.display = "none";
+      continueBtn.style.display = "inline-flex";
+    };
+
+    continueBtn.onclick = function(){
+      overlay.classList.remove('active');
+      if(idx === 4){
+        showVictory();
+      } else {
+        renderMap();
+        showScreen('screen-map');
+      }
+    };
+  }
+
+  /* =========================================================
+     VICTORY SCREEN
+  ========================================================= */
+
+  function showVictory(){
+    var total = 0;
+    var breakdown = $('victory-breakdown');
+    breakdown.innerHTML = "";
+
+    for(var i=0;i<5;i++){
+      total += state.bestScores[i];
+      var row = document.createElement('div');
+      row.className = "vb-row";
+
+      var left = document.createElement('span');
+      left.textContent = "Level " + (i+1) + ": " + LEVEL_META[i].name;
+
+      var right = document.createElement('span');
+      right.textContent = state.bestScores[i] + " / 30";
+
+      row.appendChild(left);
+      row.appendChild(right);
+      breakdown.appendChild(row);
+    }
+
+    $('victory-total').textContent = String(total);
+    showScreen('screen-victory');
+  }
+
+  /* =========================================================
+     EVENT WIRING
+  ========================================================= */
+
+  $('btn-begin').addEventListener('click', function(){
     renderMap();
-    show("screen-map");
+    showScreen('screen-map');
   });
 
-  $("victory-scorecard-btn").addEventListener("click", function(){
-    renderScoreCard();
-    show("screen-scorecard");
-  });
+  $('quiz-submit-btn').addEventListener('click', submitCurrentAnswer);
 
-  // ---------------- SCORE CARD ----------------
-  function renderScoreCard(){
-    var wrap = $("scorecard-summary");
-    wrap.innerHTML = "";
-    var clearedCount = 0;
-    for (var i=0;i<5;i++){
-      var row = document.createElement("div");
-      row.className = "summary-row";
-      var score = state.levels[i].bestScore != null ? state.levels[i].bestScore : 0;
-      if (state.levels[i].completed) clearedCount++;
-      row.innerHTML = "<span>Level "+(i+1)+": "+LEVEL_META[i].title+"</span><span>"+score+"/30 ✓</span>";
-      wrap.appendChild(row);
+  $('quiz-answer-input').addEventListener('keydown', function(e){
+    if(e.key === "Enter"){
+      e.preventDefault();
+      submitCurrentAnswer();
     }
-    $("sc-levels-cleared").textContent = clearedCount + "/5";
-  }
+  });
 
-  $("scorecard-back-btn").addEventListener("click", function(){
-    show("screen-victory");
+  $('quiz-quit-btn').addEventListener('click', function(){
+    clearTimersAndPending();
+    state.finished = true;
+    renderMap();
+    showScreen('screen-map');
+  });
+
+  $('review-toggle-btn').addEventListener('click', function(){
+    var list = $('result-review-list');
+    var btn = $('review-toggle-btn');
+    var isHidden = list.style.display === "none";
+    list.style.display = isHidden ? "flex" : "none";
+    btn.textContent = isHidden ? "Hide question review ▴" : "Show question review ▾";
+  });
+
+  $('victory-restart-btn').addEventListener('click', function(){
+    location.reload();
   });
 
 })();
 </script>
+
 </body>
 </html>
